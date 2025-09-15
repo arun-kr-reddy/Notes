@@ -1,4 +1,6 @@
 # Notes
+- [Life](./Life.md)
+- [Tools](./Tools.md)
 
 ## Schedule
 - **DSA:**
