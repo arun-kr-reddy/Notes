@@ -1,7 +1,7 @@
 # C++
-- [Schedule](#schedule)
+- [Object-Oriented Programming](#object-oriented-programming)
 
-## Schedule
+## Schedule <!-- omit from toc -->
 - [C++ Features (by version)](https://github.com/AnthonyCalandra/modern-cpp-features)
 - **Core Language Features:**
   - Object-Oriented Programming:
@@ -46,3 +46,5 @@
   - `<algorithm>`
     - `std::transform`
   - Iterators
+
+## Object-Oriented Programming
