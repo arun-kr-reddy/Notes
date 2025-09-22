@@ -47,8 +47,8 @@
   - modelling exact worst, average & best case is difficult
   - `g(n) = O(f(n))` means `C * f(n)` upper bound of `g(n)`
   - `g(n) = Ω(f(n))` means `C * f(n)` lower bound of `g(n)`
-  - `g(n) = θ(f(n))` means `C1 * f(n)` upper bound and `C2 * f(n)` lower bound
-  - notations only hold beyond a constant `n0`, don't care about small values of n
+  - `g(n) = θ(f(n))` means `C1 * f(n)` upper bound & `C2 * f(n)` lower bound
+  - notations only hold beyond a constant `n0`, we don't care about small values of n
   - ```mermaid
     ---
     config:
@@ -64,3 +64,14 @@
       line [7, 2, 5, 6, 8, 10, 12, 15, 17, 20]
       line [2, 3, 3.5, 4, 5, 6, 7.5, 8.5, 10, 12.5]
     ```
+- **Asymptotic Dominance:**
+  - function with higher growth rate eventually becomes much larger for very large input sizes
+  - `f(n)` dominates `g(n)` if $\lim_{n\to\infty} g(n) / f(n) = 0$
+  - example:
+    | `n` | `lg(n)`  | `n`     | `n*lg(n)` | `n^2`  | `2^n`    | `n!`            |
+    | --- | -------- | ------- | --------- | ------ | -------- | --------------- |
+    | 10  | 0.003 µs | 0.01 µs | 0.033 µs  | 0.1 µs | 1 µs     | 3.63 ms         |
+    | 20  | 0.004 µs | 0.02 µs | 0.086 µs  | 0.4 µs | 1 ms     | 77.1 years      |
+    | 30  | 0.005 µs | 0.03 µs | 0.147 µs  | 0.9 µs | 1 sec    | 8.4 × 10^15 yrs |
+    | 40  | 0.005 µs | 0.04 µs | 0.213 µs  | 1.6 µs | 18.3 min |                 |
+    | 50  | 0.006 µs | 0.05 µs | 0.282 µs  | 2.5 µs | 13 days  |                 |
