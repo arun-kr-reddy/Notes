@@ -1,7 +1,7 @@
 # C++
 - [Object-Oriented Programming](#object-oriented-programming)
 
-## Schedule <!-- omit from toc -->
+## Plan <!-- omit from toc -->
 - [C++ Features (by version)](https://github.com/AnthonyCalandra/modern-cpp-features)
 - **Core Language Features:**
   - Object-Oriented Programming:
@@ -9,6 +9,7 @@
     - encapsulation
     - inheritance
     - polymorphism
+    - RAII, rule of 0/3/5
   - Memory:
     - pointers & references
     - dynamic allocations
@@ -28,6 +29,8 @@
     - threads
     - mutex
     - futures
+    - atomics
+    - memory ordering
   - Misc:
     - auto
     - ranged for loop
@@ -43,8 +46,12 @@
     - map & unordered map
     - set & unordered set
     - adaptors
-  - `<algorithm>`
-    - `std::transform`
+  - Algorithms (`<algorithm>`, `<numeric>`):
+    - Non-modifying: `std::find`, `std::count`, `std::for_each`, `std::all_of/any_of/none_of`
+    - Modifying: `std::transform`, `std::copy`, `std::fill`, `std::replace`, `std::remove`
+    - Sorting & searching: `std::sort`, `std::binary_search`, `std::lower_bound/upper_bound`
+    - Min/Max: `std::min`, `std::max`, `std::minmax_element`
+    - Numeric: `std::accumulate`, `std::reduce`, `std::inner_product`
   - Iterators
 
 ## Object-Oriented Programming

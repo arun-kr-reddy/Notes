@@ -1,7 +1,7 @@
 # Algorithms
 - [Asymptotic Notation](#asymptotic-notation)
 
-## Schedule <!-- omit from toc -->
+## Plan <!-- omit from toc -->
 - [Theory (Skiena)](https://www3.cs.stonybrook.edu/~skiena/373/videos/)
   - sort implementation in C++ STL
 - [Practice (NeetCode150)](https://neetcode.io/practice?tab=neetcode150)

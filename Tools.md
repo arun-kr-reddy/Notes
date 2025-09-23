@@ -7,6 +7,7 @@
   - [Git Graph](#git-graph)
   - [Quadrant Chart](#quadrant-chart)
   - [X-Y Chart](#x-y-chart)
+- [Local LLM](#local-llm)
 
 ## Mermaid
 - [Documentation](https://mermaid.js.org/intro/)
@@ -344,3 +345,21 @@
     line [10000, 50000, 200000, 1000000, 1500000, 2500000, 3000000, 3500000, 5000000, 6000000, 8000000, 9000000]
     line [20000, 100000, 400000, 2000000, 3000000, 5000000, 6000000, 7000000, 10000000, 12000000, 16000000, 18000000]
   ```
+
+## Local LLM
+- **llama.cpp:**
+  - install using `winget install --id=ggml.llamacpp --exact --silent`
+  - install [continue.dev](https://marketplace.visualstudio.com/items?itemName=Continue.continue) VS-Code extension
+  - add below to `C:\Users\arun\.continue\config.yaml`
+    ```yaml
+    models:
+      - name: llama.cpp
+        provider: llama.cpp
+        model: llama.cpp
+        apiBase: http://localhost:8080
+    ```
+  - download model (GGUF version) from [Hugging Face](https://huggingface.co/models?num_parameters=min:0,max:6B&library=gguf&sort=downloads)
+  - trigger llama.cpp server then use it in VS-Code
+    ```batch
+    llama-server -m <path_to_model>
+    ```
