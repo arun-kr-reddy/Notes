@@ -7,6 +7,7 @@
   - [Git Graph](#git-graph)
   - [Quadrant Chart](#quadrant-chart)
   - [X-Y Chart](#x-y-chart)
+- [Powershell](#powershell)
 - [Local LLM](#local-llm)
 
 ## Mermaid
@@ -346,6 +347,12 @@
     line [20000, 100000, 400000, 2000000, 3000000, 5000000, 6000000, 7000000, 10000000, 12000000, 16000000, 18000000]
   ```
 
+## Powershell
+- **Filename String Replace:**
+  ```bash
+  get-childitem * | foreach { rename-item $_ $_.Name.Replace("Lecture ","") }
+  ```
+
 ## Local LLM
 - **llama.cpp:**
   - install using `winget install --id=ggml.llamacpp --exact --silent`
@@ -360,6 +367,6 @@
     ```
   - download model (GGUF version) from [Hugging Face](https://huggingface.co/models?num_parameters=min:0,max:6B&library=gguf&sort=downloads)
   - trigger llama.cpp server then use it in VS-Code
-    ```batch
+    ```bash
     llama-server -m <path_to_model>
     ```
