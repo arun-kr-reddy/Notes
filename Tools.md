@@ -1,19 +1,21 @@
-# Tools
+# Tools <!-- omit from toc -->
 - [Mermaid](#mermaid)
   - [Flowchart](#flowchart)
+  - [| diamond       | `id1{text}`   | decision     |](#-diamond--------id1text----decision-----)
   - [Sequence Diagram](#sequence-diagram)
   - [Gantt Diagram](#gantt-diagram)
   - [Class Diagram](#class-diagram)
+  - [| `<\|--\|>` | two-way relations |](#-----two-way-relations-)
   - [Git Graph](#git-graph)
   - [Quadrant Chart](#quadrant-chart)
   - [X-Y Chart](#x-y-chart)
 - [Powershell](#powershell)
 - [Local LLM](#local-llm)
 
-## Mermaid
+# Mermaid
 - [Documentation](https://mermaid.js.org/intro/)
 
-### Flowchart
+## Flowchart
 - **Node Shapes:**
   |               |               |              |
   | ------------- | ------------- | ------------ |
@@ -21,7 +23,8 @@
   | parallelogram | `id1[/text/]` | input/output |
   | rectangle     | `id1[text]`   | process node |
   | diamond       | `id1{text}`   | decision     |
-- ```text
+- 
+  ```text
   graph LR
     a((start))
     b[func1]
@@ -61,8 +64,9 @@
     end
   ```
 
-### Sequence Diagram
-- ```text
+## Sequence Diagram
+- 
+  ```text
   %% participants rendered in order of declaration
   sequenceDiagram
     title example sequence diagram
@@ -125,8 +129,9 @@
     t2 ->>- t1: frame_done
   ```
 
-### Gantt Diagram
-- ```text
+## Gantt Diagram
+- 
+  ```text
   gantt
     dateFormat YYYY-MM-DD
     title example gantt diagram
@@ -161,7 +166,7 @@
       end : milestone, after t5, 0d
   ```
 
-### Class Diagram
+## Class Diagram
 - **Relations:**
   |            |                   |
   | ---------- | ----------------- |
@@ -173,7 +178,8 @@
   | `..>`      | dependency        |
   | `..>`      | realization       |
   | `<\|--\|>` | two-way relations |
-- ```text
+- 
+  ```text
   classDiagram
     namespace BaseShapes {
       class Shapes{
@@ -246,8 +252,9 @@
     note for Circle "defined in /shapes/circle.hpp"
   ```
 
-### Git Graph
-- ```text
+## Git Graph
+- 
+  ```text
   gitGraph LR:
     title example git graph
     commit id: "commit1"
@@ -278,8 +285,9 @@
     commit id: "commit6"
   ```
 
-### Quadrant Chart
-- ```text
+## Quadrant Chart
+- 
+  ```text
   quadrantChart
     title example quadrant chart
     x-axis low talent --> high talent
@@ -315,8 +323,9 @@
     candidate_6: [0.35, 0.78]
   ```
 
-### X-Y Chart
-- ```text
+## X-Y Chart
+- 
+  ```text
   ---
   config:
     themeVariables:
@@ -347,13 +356,13 @@
     line [20000, 100000, 400000, 2000000, 3000000, 5000000, 6000000, 7000000, 10000000, 12000000, 16000000, 18000000]
   ```
 
-## Powershell
+# Powershell
 - **Filename String Replace:**
   ```bash
   get-childitem * | foreach { rename-item $_ $_.Name.Replace("Lecture ","") }
   ```
 
-## Local LLM
+# Local LLM
 - **llama.cpp:**
   - install using `winget install --id=ggml.llamacpp --exact --silent`
   - install [continue.dev](https://marketplace.visualstudio.com/items?itemName=Continue.continue) VS-Code extension

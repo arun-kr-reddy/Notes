@@ -1,7 +1,7 @@
-# Algorithms
+# Algorithms <!-- omit from toc -->
 - [Asymptotic Notation](#asymptotic-notation)
 
-## Plan <!-- omit from toc -->
+# Plan <!-- omit from toc -->
 - [Theory (Skiena)](https://www3.cs.stonybrook.edu/~skiena/373/videos/)
   - sort implementation in C++ STL
 - [Practice (NeetCode150)](https://neetcode.io/practice?tab=neetcode150)
@@ -16,7 +16,7 @@
     - if you can't solve new problems then you are memorizing solutions
   - first time will take multiple months but getting back into it next time will just take weeks
 
-## Asymptotic Notation
+# Asymptotic Notation
 - **RAM Model of Computation:**
   - to study algorithms in a machine/language independent way
   - each simple operations (`+`, `-`, `=`, `if`, `call`) takes 1 step
@@ -28,7 +28,8 @@
   - maximum steps taken by algorithm on any instance of size n
   - worst-case preferred measure of algorithm efficiency
   - but randomized algorithms require average-case to show off their merits
-  - ```mermaid
+  - 
+    ```mermaid
     ---
     config:
       themeVariables:
@@ -49,7 +50,8 @@
   - `g(n) = Ω(f(n))` means `C * f(n)` lower bound of `g(n)`
   - `g(n) = θ(f(n))` means `C1 * f(n)` upper bound & `C2 * f(n)` lower bound
   - notations only hold beyond a constant `n0`, we don't care about small values of n
-  - ```mermaid
+  - 
+    ```mermaid
     ---
     config:
       themeVariables:

@@ -1,7 +1,9 @@
-# C++
+# C++ <!-- omit from toc -->
 - [Standard Template Library](#standard-template-library)
+  - [Containers](#containers)
+- [Misc](#misc)
 
-## Plan <!-- omit from toc -->
+# Plan <!-- omit from toc -->
 - [C++ Features (by version)](https://github.com/AnthonyCalandra/modern-cpp-features)
 - **Core Language Features:**
   - Object-Oriented Programming:
@@ -55,12 +57,18 @@
     - Numeric: `std::accumulate`, `std::reduce`, `std::inner_product`
   - Iterators
 
-## Standard Template Library
-- ```mermaid
-  graph TD
+# Standard Template Library
+- **Containers:**
+  - essentially data structures that stores templated elements
+- **Algorithms:**
+  - functions that operate on elements stored in containers using iterator-range
+- **Iterators:**
+  - general way to access elements in containers
+- 
+  ```mermaid
+  graph LR
+    e0[Element 0]
     e1[Element 1]
-    e2[Element 2]
-    e3[Element 3]
     en[Element n]
 
     algo[Algorithm]
@@ -68,65 +76,73 @@
     range[Iterator Range]
 
     subgraph Container
-    e1 --> e2
-    e2 --> e3
-    e3 -..-> en
+    e0 --> e1
+    e1 -.-> en
     end
 
-    e1 -.-> range
-    en -.-> range
+    e0 -.start.-> range
+    en -.end.-> range
     range --> algo
   ```
-- **Containers:**
-  - essentially data structures that stores templated elements
-- **Algorithms:**
-  - functions that operate on elements stored in containers using iterator range
-- **Iterators:**
-  - general way to access elements in containers
 
-### Containers
+## Containers
 - **Sequence Containers:**
   - element position dictated by user
 - **Associative Containers:**
-  - elements stored in a way that allows fast look-up
+  - elements stored in a way that allows fast look-up (sorted or hashed)
 
-#### String
+### String
 - basically `basic_string<char>`
   - also supports other element sizes (for unicodes)
-- ```cpp
+- 
+  ```cpp
   #include <string>
-  std::string str; // std::string str("hello world");
+  std::string str;
 
-  char c = str.at(i); // get element (with bounds checking)
-  str = another_str;  // copy assign
-  str += another_str; // append operator
-  str.erase(itr);     // remove element (character)
-  str.push_back(val); // add element at the end, pop_back(), alternate to `emplace_back`
+  str = another_str;                // copy assign
+  char c = str.at(i);               // get element (with bounds checking)
+  str += another_str;               // append operator
+  str.erase(itr);                   // remove element
+  str.push_back(val);               // add element at the end, pop_back()
 
-  size_t size = str.size();         // num elements
-  size_t capacity = str.capacity(); // num elements (+ 1 for end) in currently allocated mem
-  str.reserve(size);                // reserve memory, optional arg for initializing new elements
+  size_t size = str.size();         // num elements (excluding NULL)
+  size_t capacity = str.capacity(); // max num elements (+ 1) possible in allocated mem
+  str.reserve(size);                // reserve memory
   str.shrink_to_fit();              // dealloc unused memory
   str.clear();                      // clear string
 
-  char *data = str.data();          // underlying C array (null terminated)
+  char *data = str.data();          // underlying C array (NULL terminated)
   if (str.find(substr) != str.npos) // index of first substring occurence
   str.swap(another_str);            // swap string contents
   ```
 
-#### Array
-- fized-size array allocated on stack
+### Array
+- fixed-size contiguous array on stack
 - commonly used APIs like `size()`, `at()`, etc are `constexpr`
-- ```cpp
+- 
+  ```cpp
   #include <array>
-  std::array<T, SIZE_MAX> arr; // std::array<uint32_t, 3> arr{1, 2, 3};
+  std::array<T, SIZE_MAX> arr;
 
-  arr.fill(value) // assign value to all elements
+  arr.fill(value); // assign value to all elements
 
-  // =, empty, size, data, at(i), clear, swap
+  // =, at, size, clear, data, swap
   ```
 
-## Misc
+### Vector
+- dynamic-size contiguous array on heap
+- 
+  ```cpp
+  #include <vector>
+  std::vector<T> vector;
+
+  auto val_itr = insert(itr, val); // insert element
+
+  // =, at, erase, push_back, size, capacity, reserve, shrink_to_fit, clear, data, swap
+  ```
+- `insert`/`push_back` vs `emplace`/`emplace_back`:
+
+# Misc
 - C-style arrays decay to pointer when passed to function
 - when to use curly brace initializer & when to use parantheses?
   ```cpp
