@@ -1,17 +1,3 @@
-# Tools <!-- omit from toc -->
-- [Mermaid](#mermaid)
-  - [Flowchart](#flowchart)
-  - [| diamond       | `id1{text}`   | decision     |](#-diamond--------id1text----decision-----)
-  - [Sequence Diagram](#sequence-diagram)
-  - [Gantt Diagram](#gantt-diagram)
-  - [Class Diagram](#class-diagram)
-  - [| `<\|--\|>` | two-way relations |](#-----two-way-relations-)
-  - [Git Graph](#git-graph)
-  - [Quadrant Chart](#quadrant-chart)
-  - [X-Y Chart](#x-y-chart)
-- [Powershell](#powershell)
-- [Local LLM](#local-llm)
-
 # Mermaid
 - [Documentation](https://mermaid.js.org/intro/)
 

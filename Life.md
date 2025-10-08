@@ -1,7 +1,4 @@
-# Life
-- [Personal Finance](#personal-finance)
-
-## Personal Finance
+# Personal Finance
 - **Why Sell ESOPs on Vest:**
   - if you had cash, would you buy company stock?
   - stock falling in future and losing your job are highly correlated

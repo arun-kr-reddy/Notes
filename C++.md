@@ -1,62 +1,3 @@
-# C++ <!-- omit from toc -->
-- [Standard Template Library](#standard-template-library)
-  - [Containers](#containers)
-- [Misc](#misc)
-
-# Plan <!-- omit from toc -->
-- [C++ Features (by version)](https://github.com/AnthonyCalandra/modern-cpp-features)
-- **Core Language Features:**
-  - Object-Oriented Programming:
-    - classes & objects
-    - encapsulation
-    - inheritance
-    - polymorphism
-    - RAII, rule of 0/3/5
-  - Memory:
-    - pointers & references
-    - dynamic allocations
-    - smart pointers
-    - misc memory
-      - representations
-        - sign extension, int promotion
-      - fixed vs floating point
-      - type qualifiers
-      - linkage
-      - storage duration
-      - storage class
-      - endianess
-      - memory layout
-  - Templates
-  - Concurrency
-    - threads
-    - mutex
-    - futures
-    - atomics
-    - memory ordering
-  - Misc:
-    - auto
-    - ranged for loop
-    - bit manipulation
-    - lambda
-    - move semantics
-    - exception & error handling
-    - I/O streams
-- **STL:**
-  - Containers:
-    - vector
-      - vector of bool
-    - string
-    - map & unordered map
-    - set & unordered set
-    - adaptors
-  - Algorithms (`<algorithm>`, `<numeric>`):
-    - Non-modifying: `std::find`, `std::count`, `std::for_each`, `std::all_of/any_of/none_of`
-    - Modifying: `std::transform`, `std::copy`, `std::fill`, `std::replace`, `std::remove`
-    - Sorting & searching: `std::sort`, `std::binary_search`, `std::lower_bound/upper_bound`
-    - Min/Max: `std::min`, `std::max`, `std::minmax_element`
-    - Numeric: `std::accumulate`, `std::reduce`, `std::inner_product`
-  - Iterators
-
 # Standard Template Library
 - **Containers:**
   - essentially data structures that stores templated elements
@@ -140,12 +81,58 @@
 
   // =, at, erase, push_back, size, capacity, reserve, shrink_to_fit, clear, data, swap
   ```
-- `insert`/`push_back` vs `emplace`/`emplace_back`:
 
-# Misc
+### List
+- doubly-linked list
+- ```cpp
+  #include <list>
+  std::list<T> lst;
+
+  lst.push_front(val);                                          // add element at the start, pop_front()
+
+  lst.sort();                                                   // sort elements
+  lst.merge(another_lst);                                       // merge sorted lists
+  lst.unique();                                                 // remove consecutive duplicate elements
+  lst.reverse();                                                // reverse order of elements
+  lst.splice(another_lst_itr, another_lst, start_itr, end_itr); // move elements between iterator range
+
+  // =, erase, push_back, insert, size, clear, swap
+
+  // no random access, so no at()
+  // each node allocates its own memory, so no capacity related functions
+  ```
+
+### Forward List
+- singly-linked list
+- ```cpp
+  #include <forward_list>
+  std::forward_list<T> fwd_lst;
+
+  fwd_lst.before_begin(); // special itr to element before beginning (useful for insert at start)
+
+  fwd_lst.erase_after(itr);                                       // similar to erase
+  fwd_lst.insert_after(itr, val);                                 // similar to insert
+  splice_after(another_lst_itr, another_lst, start_itr, end_itr); // similar to splice
+
+  // =, push_front (no push_back), clear, swap, sort, merge, unique, reverse
+
+  // use std::distance to get size
+  ```
+
+
+## Iterators
+- `adv_itr = std::next(itr, val)` advance iterator specific number of positions
+
+# Doubts
 - C-style arrays decay to pointer when passed to function
 - when to use curly brace initializer & when to use parantheses?
   ```cpp
   std::string str("hello world");
   std::array<uint32_t, 3> arr{1, 2, 3};
   ```
+- `insert`/`push_back` vs `emplace`/`emplace_back`:
+  - constructs temporary object then copy/move it  
+  - constructs object in place with ctor arguments, more performant for types with inefficient move ctor
+- list `O(n)` search but low spatial locality so slower than vector
+- all containers table with `O()` for common operations & when to use
+  - in Algorithms?
