@@ -71,8 +71,8 @@
   | swap Algorithm    | `std::swap(vec, vec2)`  |
 - **Comparison:** first size compared, then elements compared one-by-one
   - all containers support `==` & `!=`
-  - onlysequence & ordered containers support `<`, `<=`, `>` & `>=`
-    - first mismatched element comparison determines result
+  - only sequence & ordered containers support `<`, `<=`, `>` & `>=`
+    - result determined by first mismatched element pair
 - **Range-Based Loop:**
   ```cpp
   for (const auto i : vec) {
@@ -139,7 +139,7 @@
   - `deque` comes from **d**ouble **e**nded **que**ue
   - `deque` doesn't need data relocation when resized, so no memory reservation
   - `forward_list` doesn't know its size, instead use `std::distance(f_list.begin(), f_list.end())`
-  - all search `O(n)` but costant factor high for list due to low spatial locality
+  - all search `O(n)` but constant factor high for list due to low spatial locality
 
 ## Iterators
 - `adv_itr = std::next(itr, val)` advance iterator specific number of positions
