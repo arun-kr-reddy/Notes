@@ -1,3 +1,8 @@
+# Life <!-- omit from toc -->
+- [Personal Finance](#personal-finance)
+
+# Links <!-- omit from toc -->
+
 # Personal Finance
 - **Why Sell ESOPs on Vest:**
   - if you had cash, would you buy company stock?

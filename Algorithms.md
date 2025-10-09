@@ -1,3 +1,9 @@
+# Algorithms <!-- omit from toc -->
+- [Asymptotic Notation](#asymptotic-notation)
+
+# Links <!-- omit from toc -->
+
+
 # Asymptotic Notation
 - **RAM Model of Computation:**
   - to study algorithms in a machine/language independent way
@@ -10,8 +16,7 @@
   - maximum steps taken by algorithm on any instance of size n
   - worst-case preferred measure of algorithm efficiency
   - but randomized algorithms require average-case to show off their merits
-  - 
-    ```mermaid
+  - ```mermaid
     ---
     config:
       themeVariables:
@@ -32,8 +37,7 @@
   - `g(n) = Ω(f(n))` means `C * f(n)` lower bound of `g(n)`
   - `g(n) = θ(f(n))` means `C1 * f(n)` upper bound & `C2 * f(n)` lower bound
   - notations only hold beyond a constant `n0`, we don't care about small values of n
-  - 
-    ```mermaid
+  - ```mermaid
     ---
     config:
       themeVariables:

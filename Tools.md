@@ -1,3 +1,18 @@
+# Tools <!-- omit from toc -->
+- [Mermaid](#mermaid)
+  - [Flowchart](#flowchart)
+  - [Sequence Diagram](#sequence-diagram)
+  - [Gantt Diagram](#gantt-diagram)
+  - [Class Diagram](#class-diagram)
+  - [Git Graph](#git-graph)
+  - [Quadrant Chart](#quadrant-chart)
+  - [X-Y Chart](#x-y-chart)
+- [Powershell](#powershell)
+- [Local LLM](#local-llm)
+
+
+# Links <!-- omit from toc -->
+
 # Mermaid
 - [Documentation](https://mermaid.js.org/intro/)
 
@@ -9,8 +24,7 @@
   | parallelogram | `id1[/text/]` | input/output |
   | rectangle     | `id1[text]`   | process node |
   | diamond       | `id1{text}`   | decision     |
-- 
-  ```text
+- ```text
   graph LR
     a((start))
     b[func1]
@@ -51,8 +65,7 @@
   ```
 
 ## Sequence Diagram
-- 
-  ```text
+- ```text
   %% participants rendered in order of declaration
   sequenceDiagram
     title example sequence diagram
@@ -116,8 +129,7 @@
   ```
 
 ## Gantt Diagram
-- 
-  ```text
+- ```text
   gantt
     dateFormat YYYY-MM-DD
     title example gantt diagram
@@ -164,8 +176,7 @@
   | `..>`      | dependency        |
   | `..>`      | realization       |
   | `<\|--\|>` | two-way relations |
-- 
-  ```text
+- ```text
   classDiagram
     namespace BaseShapes {
       class Shapes{
@@ -239,8 +250,7 @@
   ```
 
 ## Git Graph
-- 
-  ```text
+- ```text
   gitGraph LR:
     title example git graph
     commit id: "commit1"
@@ -272,8 +282,7 @@
   ```
 
 ## Quadrant Chart
-- 
-  ```text
+- ```text
   quadrantChart
     title example quadrant chart
     x-axis low talent --> high talent
@@ -310,8 +319,7 @@
   ```
 
 ## X-Y Chart
-- 
-  ```text
+- ```text
   ---
   config:
     themeVariables:
