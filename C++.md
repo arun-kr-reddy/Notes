@@ -3,6 +3,8 @@
   - [Containers](#containers)
     - [Interface](#interface)
     - [Sequence Containers](#sequence-containers)
+    - [Ordered Associative Containers](#ordered-associative-containers)
+    - [Unordered Associative Containers](#unordered-associative-containers)
   - [Iterators](#iterators)
 - [Doubts](#doubts)
 
@@ -37,6 +39,7 @@
 - **Sequence Containers:** elements stored linearly with position dictated by user
 - **Associative Containers:** elements stored in a way that allows fast look-up
     - can be ordered (sorted) or unordered (hashed)
+    - ordered containers implemented using binary balanced search trees
 
 ### Interface
 - **Constructors:**
@@ -84,6 +87,7 @@
 - **Overview:**
   |                       | array              | vector               | deque                   | list                   | forward_list     |
   | --------------------- | ------------------ | -------------------- | ----------------------- | ---------------------- | ---------------- |
+  | header                | `<array>`          | `<vector>`           | `<deque>`               | `<list>`               | `<forward_list>` |
   | size                  | static             | dynamic              | dynamic                 | dynamic                | dynamic          |
   | implementation        | static array       | dynamic array        | sequence of arrays      | doubly-LL              | singly-LL        |
   | access                | random             | random               | random                  | forward & backward     | forward          |
@@ -140,6 +144,54 @@
   - `deque` doesn't need data relocation when resized, so no memory reservation
   - `forward_list` doesn't know its size, instead use `std::distance(f_list.begin(), f_list.end())`
   - all search `O(n)` but constant factor high for list due to low spatial locality
+
+### Ordered Associative Containers
+- **Declaration:**
+  ```cpp
+  template <class Key,
+            class T,
+            class Compare = std::less<Key>,
+            class Allocator = std::allocator<std::pair<const Key, T>>>
+  class map;
+  ```
+- **Overview:**
+  |          | header  | value associated | identical keys |
+  | -------- | ------- | ---------------- | -------------- |
+  | set      | `<set>` | no               | no             |
+  | multiset | `<set>` | no               | yes            |
+  | map      | `<map>` | yes              | no             |
+  | multimap | `<map>` | yes              | yes            |
+- **Insert:**
+  ```cpp
+  <pos_itr, bool> = set.insert(val)   // insert value if not exists (check bool)
+  pos_itr = set.insert(hint_itr, val) // pass hint for `θ(1)` insertion
+  ```
+  - for multi-* duplicates permitted, so only iterator returned 
+- **Find:**
+  ```cpp
+  pos_itr = st.find(key) // find element, (pos_itr == st.end()) if not present
+  if (mp.count(key) > 0) // number of matching keys (0/1 for set & map)
+  ```
+- **Special Notes:**
+  - `[]` operator creates new element if key already not present
+    - for map new entry with key & default-contructed value
+
+### Unordered Associative Containers
+- **Declaration:**
+  ```cpp
+  template <class Key,
+            class Hash = std::hash<Key>,
+            class KeyEqual = std::equal_to<Key>,
+            class Allocator = std::allocator<Key>>
+  class unordered_map;
+  ```
+- properties overview similar to ordered associative containers
+- **Bucket Interface:**
+  ```cpp
+  size_t bc = ust.bucket_count() // total number of buckets
+  float lf = ust.loadfactor()    // average elements per bucket, size()/bucket_count()
+  size_t bct = ust.bucket(val)   // bucket number of value
+  ```
 
 ## Iterators
 - `adv_itr = std::next(itr, val)` advance iterator specific number of positions
