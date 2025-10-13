@@ -3,16 +3,19 @@
   - [Containers](#containers)
     - [Interface](#interface)
     - [Sequence Containers](#sequence-containers)
+    - [Utilities](#utilities)
     - [Ordered Associative Containers](#ordered-associative-containers)
     - [Unordered Associative Containers](#unordered-associative-containers)
+    - [Container Adaptors](#container-adaptors)
   - [Iterators](#iterators)
+  - [Algorithms](#algorithms)
 - [Doubts](#doubts)
 
 # Links <!-- omit from toc -->
-- [STL Containers (CPP Con)](https://www.youtube.com/watch?v=ZMUKa2kWtTk)
+- [Classic STL (CppCon)](https://www.youtube.com/watch?v=tXUXl_RzkAk)
+- [STL Containers (CppCon)](https://www.youtube.com/watch?v=ZMUKa2kWtTk)
 
 # Standard Template Library
-
 - **Containers:** essentially data structures that stores templated elements  
   **Algorithms:** functions that operate on elements stored in containers using iterator-range  
   **Iterators:** general way to access elements in containers
@@ -35,11 +38,12 @@
     en -.end.-> range
     range --> algo
   ```
+
 ## Containers
 - **Sequence Containers:** elements stored linearly with position dictated by user
 - **Associative Containers:** elements stored in a way that allows fast look-up
-    - can be ordered (sorted) or unordered (hashed)
-    - ordered containers implemented using binary balanced search trees
+  - can be ordered (sorted) or unordered (hashed)
+  - ordered containers implemented using binary balanced search trees
 
 ### Interface
 - **Constructors:**
@@ -139,11 +143,14 @@
     splice_after(another_lst_itr, another_lst, start_itr, end_itr) // similar to splice
     ```
 - **Special Notes:**
+  - prefer `array` over `vector` when size known compile-time or is small (need to fit on stack)
   - `std::string` is just `std::vector<char>` with special operations like `+=`
   - `deque` comes from **d**ouble **e**nded **que**ue
   - `deque` doesn't need data relocation when resized, so no memory reservation
   - `forward_list` doesn't know its size, instead use `std::distance(f_list.begin(), f_list.end())`
   - all search `O(n)` but constant factor high for list due to low spatial locality
+
+### Utilities
 
 ### Ordered Associative Containers
 - **Declaration:**
@@ -173,8 +180,7 @@
   if (mp.count(key) > 0) // number of matching keys (0/1 for set & map)
   ```
 - **Special Notes:**
-  - `[]` operator creates new element if key already not present
-    - for map new entry with key & default-contructed value
+  - `[]` operator creates new element (with default-constructed value) if key already not present
 
 ### Unordered Associative Containers
 - **Declaration:**
@@ -193,8 +199,54 @@
   size_t bct = ust.bucket(val)   // bucket number of value
   ```
 
+### Container Adaptors
+  
 ## Iterators
-- `adv_itr = std::next(itr, val)` advance iterator specific number of positions
+- **Types:**
+  | type           | properties                                           | example                         |
+  | -------------- | ---------------------------------------------------- | ------------------------------- |
+  | output         | write-only, forward traversal, single pass           | output stream                   |
+  | input          | read-only, forward traversal, single pass            | input stream                    |
+  | forward        | read/write, forward traversal, multi-pass            | `forward_list`, `unordered_set` |
+  | bi-directional | forward & backward traversal                         | `list`, `set`                   |
+  | random-access  | arbitrary position `O(1)` jumps, pointer arithematic | `vector`, `array`               |
+  - `unordered_set` elements in same bucket stored as `forward_list`
+- **Hierarchy of Requirements:** lower category supports all operations of ones above it  
+  example: bi-directional supports read/write & multi-pass (forward's properties)
+  ```mermaid
+  graph BT
+    random[Random Access]
+    bidirectional[Bi-Directional]
+    forward[Forward]
+    input[Input]
+    output[Output]
+
+    random --> bidirectional
+    bidirectional --> forward
+    forward --> output
+    forward --> input
+  ```
+- **Iterator Range:** represented by pair of iterators `[start, end)`
+  - `last` is non-dereferencable, "one-past-the-end" (PTE) position
+  - use empty (sentinel) nodes as PTE for node-based containers
+- **Iterator Adaptors:**
+  - **`reverse_iterator`**: iterates backward from end of sequence, needs bi-directional or random-access
+- **Misc:**
+  - `adv_itr = std::next(itr, val)` advance iterator specific number of positions
+  - algorithms requiring `O(1)` access (like `std::sort`) need random-access iterator
+  - `auto dist = std::distance(itr1, itr2)` returns number of hops but return type `std::ptrdiff_t`
+  - output iterators have no concept of end, so no `==` or `!=` operators
+
+## Algorithms
+- **Types:**
+  - **Non-Modifying:** seraching, counting, min, max
+  - **Modifying:** change value of elements
+  - **Removing:** removing elements from sequence (usually by moving removed elements to end)
+  - **Mutating:** change order of elements, reverse, rotate, shuffle, permute
+  - **Sorting:**
+  - **Sorted-Range:**
+  - **Numeric:**
+
 
 # Doubts
 - C-style arrays decay to pointer when passed to function
