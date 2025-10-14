@@ -19,31 +19,14 @@
 - **Containers:** essentially data structures that stores templated elements  
   **Algorithms:** functions that operate on elements stored in containers using iterator-range  
   **Iterators:** general way to access elements in containers
-  ```mermaid
-  graph LR
-    e0[Element 0]
-    e1[Element 1]
-    en[Element n]
-
-    algo[Algorithm]
-
-    range[Iterator Range]
-
-    subgraph Container
-    e0 --> e1
-    e1 -.-> en
-    end
-
-    e0 -.start.-> range
-    en -.end.-> range
-    range --> algo
-  ```
+  ![](./Media/C++/STL_Parts.png)
 
 ## Containers
-- **Sequence Containers:** elements stored linearly with position dictated by user
+- **Sequence Containers:** elements' position dictated by user
 - **Associative Containers:** elements stored in a way that allows fast look-up
   - can be ordered (sorted) or unordered (hashed)
   - ordered containers implemented using binary balanced search trees
+- **Container Adaptors:** different interface to underlying sequence containers
 
 ### Interface
 - **Constructors:**
@@ -142,7 +125,10 @@
     fwd_lst.insert_after(itr, val)                                 // similar to insert
     splice_after(another_lst_itr, another_lst, start_itr, end_itr) // similar to splice
     ```
-- **Special Notes:**
+- **`vector<bool>`:** space-efficient specialization where each element occupies single bit
+  - different elements in same container shouldn't be concurrently modified
+  - `flip()` toggles each element (bit)
+- **Misc:**
   - prefer `array` over `vector` when size known compile-time or is small (need to fit on stack)
   - `std::string` is just `std::vector<char>` with special operations like `+=`
   - `deque` comes from **d**ouble **e**nded **que**ue
@@ -179,7 +165,7 @@
   pos_itr = st.find(key) // find element, (pos_itr == st.end()) if not present
   if (mp.count(key) > 0) // number of matching keys (0/1 for set & map)
   ```
-- **Special Notes:**
+- **Misc:**
   - `[]` operator creates new element (with default-constructed value) if key already not present
 
 ### Unordered Associative Containers
@@ -200,7 +186,26 @@
   ```
 
 ### Container Adaptors
-  
+- **Overview:**
+  |                |           |                                                               |
+  | -------------- | --------- | ------------------------------------------------------------- |
+  | stack          | `<stack>` | deque wrapper with push/pop from only one side (LIFO)         |
+  | queue          | `<queue>` | deque wrapper with push on one side & pop on other (FIFO)     |
+  | priority queue | `<queue>` | (sorted) vector wrapper with `O(1)` top-element lookup (heap) |
+- **Interface:**
+  |                                | stack               | queue               | priority queue                    |
+  | ------------------------------ | ------------------- | ------------------- | --------------------------------- |
+  | copy ctor (existing container) | `stack<T> stk(dq)`  | `queue<T> qu(dq)`   | `priority_queue<T> pq(pred, vec)` |
+  | push new element               | `push(val)`         | `push(val)`         | `push(val)` (into sorted vec)     |
+  | peek top element               | `top()`             | `front()`           | `top()`                           |
+  | pop top element                | `pop()`             | `pop()`             | `pop()`                           |
+  | misc                           | `empty()`, `size()` | `empty()`, `size()` | `empty()`, `size()`               |
+- **Misc:**
+  - `pop()` doesn't return element, so store `top()`/`front()` first
+  - `stack` & `queue` use deque since growing is faster  
+    `priority_queue` uses sorted vector since insertion faster with contiguous memory
+  - use `std::less<T>` (largest at top) or `std::greater<T>` as predicate
+
 ## Iterators
 - **Types:**
   | type           | properties                                           | example                         |
@@ -211,8 +216,8 @@
   | bi-directional | forward & backward traversal                         | `list`, `set`                   |
   | random-access  | arbitrary position `O(1)` jumps, pointer arithematic | `vector`, `array`               |
   - `unordered_set` elements in same bucket stored as `forward_list`
-- **Hierarchy of Requirements:** lower category supports all operations of ones above it  
-  example: bi-directional supports read/write & multi-pass (forward's properties)
+- **Hierarchy of Requirements:** lower category supports all operations of ones above it (output optional)  
+  *example:* bi-directional supports read/write & multi-pass (forward's properties)
   ```mermaid
   graph BT
     random[Random Access]
@@ -223,18 +228,22 @@
 
     random --> bidirectional
     bidirectional --> forward
-    forward --> output
+    forward -.-> output
     forward --> input
   ```
 - **Iterator Range:** represented by pair of iterators `[start, end)`
   - `last` is non-dereferencable, "one-past-the-end" (PTE) position
   - use empty (sentinel) nodes as PTE for node-based containers
-- **Iterator Adaptors:**
-  - **`reverse_iterator`**: iterates backward from end of sequence, needs bi-directional or random-access
+- **Interfaces:**
+  - `begin()` & `end()` iterators common to all containers
+  - `rbegin()`, `rend()` reverse iterators for bi-directional containers
+  - ![](./Media/C++/Iterators.png)
+- **Iterator Invalidation:**  
+ ![](./Media/C++/Iterator_Invalidation.png)
 - **Misc:**
   - `adv_itr = std::next(itr, val)` advance iterator specific number of positions
   - algorithms requiring `O(1)` access (like `std::sort`) need random-access iterator
-  - `auto dist = std::distance(itr1, itr2)` returns number of hops but return type `std::ptrdiff_t`
+  - `auto dist = std::distance(itr1, itr2)` returns number of hops, but return type `std::ptrdiff_t` (signed int)
   - output iterators have no concept of end, so no `==` or `!=` operators
 
 ## Algorithms
@@ -246,7 +255,7 @@
   - **Sorting:**
   - **Sorted-Range:**
   - **Numeric:**
-
+- `lower_bound()` `O(log n)` with random-access iterators, else `O(n)`
 
 # Doubts
 - C-style arrays decay to pointer when passed to function

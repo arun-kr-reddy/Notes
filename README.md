@@ -74,3 +74,6 @@
   - goal is to understand the problem not memorize solution
     - if you can't solve new problems then you are memorizing solutions
   - first time will take multiple months but getting back into it next time will just take weeks
+
+## Performance
+- [Parallel Computing](https://www.youtube.com/playlist?list=PLoROMvodv4rMp7MTFr4hQsDEcX7Bx6Odp) ([Notes](https://gfxcourses.stanford.edu/cs149/fall23/))
