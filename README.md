@@ -1,10 +1,14 @@
-# Notes
+# Notes <!-- omit from toc -->
 - [Algorithms](./Algorithms.md)
 - [C++](./C++.md)
 - [Life](./Life.md)
 - [Tools](./Tools.md)
 
-# Plan
+# Plan <!-- omit from toc -->
+- [C++](#c)
+- [DSA](#dsa)
+- [Performance](#performance)
+- [Scratch](#scratch)
 
 ## C++
 - [C++ Features (by version)](https://github.com/AnthonyCalandra/modern-cpp-features)
@@ -76,4 +80,16 @@
   - first time will take multiple months but getting back into it next time will just take weeks
 
 ## Performance
-- [Parallel Computing](https://www.youtube.com/playlist?list=PLoROMvodv4rMp7MTFr4hQsDEcX7Bx6Odp) ([Notes](https://gfxcourses.stanford.edu/cs149/fall23/))
+- [Parallel Computing](https://www.youtube.com/playlist?list=PLoROMvodv4rMp7MTFr4hQsDEcX7Bx6Odp) ([Notes](https://gfxcourses.stanford.edu/cs149/fall23/))]
+- [OpenCL courses (YT Channel)](https://www.youtube.com/@davidblack-schaffer219/courses)
+- [LeetGPU](https://leetgpu.com/challenges)
+- [GPU MLOps Talks (YT Channel)](https://www.youtube.com/@GPUMODE/videos) ([slides](https://github.com/gpu-mode/lectures))
+
+## Scratch
+- [Deep Learning Systems (YT Playlist)](https://www.youtube.com/playlist?list=PLGzYMymX8amNyGPuJ35YWdq59eQ5jYCZ1)
+- [Operating Systems (YT Playlist)](https://www.youtube.com/playlist?list=PLF2K2xZjNEf97A_uBCwEl61sdxWVP7VWC)
+- [Compilers (YT Playlist)](https://www.youtube.com/playlist?list=PLTsf9UeqkRebOYdw4uqSN0ugRShSmHrzH)
+- [Machine Learning (YT Playlist)](https://www.youtube.com/playlist?list=PLoROMvodv4rNH7qL6-efu_q2_bPuy0adh)
+- [Parallel Computing (YT Playlist)](https://www.youtube.com/playlist?list=PLoROMvodv4rMp7MTFr4hQsDEcX7Bx6Odp)
+- [Performance Engineering (YT Playlist)](https://www.youtube.com/playlist?list=PLUl4u3cNGP63VIBQVWguXxZZi0566y7Wf)
+- [llama.cpp CUDA kernels (Github)](https://github.com/ggml-org/llama.cpp/tree/master/ggml/src/ggml-cuda)
