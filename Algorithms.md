@@ -6,12 +6,9 @@
 
 # Asymptotic Notation
 - **RAM Model of Computation:**
-  - to study algorithms in a machine/language independent way
-  - each simple operations (`+`, `-`, `=`, `if`, `call`) takes 1 step
-  - loops & subroutine calls are not simple operations
-    - depend upon size of data and loop/subroutine contents
-  - each memory access takes exactly 1 step
-  - run time of algorithm measured by counting number of steps
+  - machine/language independent model for analyzing algorithms by counting number of steps
+  - each simple operation (`+`, `-`, `=`, `if`, `call`) and memory access takes one step
+  - cost of loops & subroutines is sum of steps for their operations
 - **Worst-Case Complexity:**
   - maximum steps taken by algorithm on any instance of size n
   - worst-case preferred measure of algorithm efficiency
@@ -24,7 +21,7 @@
           plotColorPalette: '#FF0000, #000000, #00FF00'
     ---
     xychart-beta
-    title "worst, average & best case"
+      title "worst, average & best case"
       x-axis "problem size" 1 --> 5
       y-axis "number of steps"
       line [2, 6, 10, 20, 40]
@@ -45,7 +42,7 @@
           plotColorPalette: '#FF0000, #000000, #00FF00'
     ---
     xychart-beta
-    title "g(n) = θ(f(n)) holds beyond n == 3"
+      title "g(n) = θ(f(n)) holds beyond n == 3"
       x-axis "problem size" 1 --> 10
       y-axis "number of steps"
       line [4, 6, 7, 8, 10, 12, 15, 17, 20, 25]
