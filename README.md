@@ -65,8 +65,7 @@
   - Iterators
 
 ## DSA
-- [Theory (Skiena)](https://www3.cs.stonybrook.edu/~skiena/373/videos/)
-  - sort implementation in C++ STL
+- sort implementation in C++ STL
 - [Practice (NeetCode150)](https://neetcode.io/practice?tab=neetcode150)
 - **Method:** ([reddit](https://www.reddit.com/r/cscareerquestions/comments/ot9ssf/comment/h6tx1vx/?utm_source=share&utm_medium=mweb3x&utm_name=mweb3xcss&utm_term=1&utm_content=share_button), [medium](https://medium.com/@rajbopche/my-preparation-for-algo-ds-193c90952d8c))
   - if no progress within first 10min then mark it (for review later), watch video solution & then code it yourself
@@ -84,12 +83,11 @@
 - [OpenCL courses (YT Channel)](https://www.youtube.com/@davidblack-schaffer219/courses)
 - [LeetGPU](https://leetgpu.com/challenges)
 - [GPU MLOps Talks (YT Channel)](https://www.youtube.com/@GPUMODE/videos) ([slides](https://github.com/gpu-mode/lectures))
+- [llama.cpp CUDA kernels (Github)](https://github.com/ggml-org/llama.cpp/tree/master/ggml/src/ggml-cuda)
 
 ## Scratch
 - [Deep Learning Systems (YT Playlist)](https://www.youtube.com/playlist?list=PLGzYMymX8amNyGPuJ35YWdq59eQ5jYCZ1)
 - [Operating Systems (YT Playlist)](https://www.youtube.com/playlist?list=PLF2K2xZjNEf97A_uBCwEl61sdxWVP7VWC)
 - [Compilers (YT Playlist)](https://www.youtube.com/playlist?list=PLTsf9UeqkRebOYdw4uqSN0ugRShSmHrzH)
 - [Machine Learning (YT Playlist)](https://www.youtube.com/playlist?list=PLoROMvodv4rNH7qL6-efu_q2_bPuy0adh)
-- [Parallel Computing (YT Playlist)](https://www.youtube.com/playlist?list=PLoROMvodv4rMp7MTFr4hQsDEcX7Bx6Odp)
 - [Performance Engineering (YT Playlist)](https://www.youtube.com/playlist?list=PLUl4u3cNGP63VIBQVWguXxZZi0566y7Wf)
-- [llama.cpp CUDA kernels (Github)](https://github.com/ggml-org/llama.cpp/tree/master/ggml/src/ggml-cuda)
