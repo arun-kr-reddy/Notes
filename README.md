@@ -79,8 +79,8 @@
   - first time will take multiple months but getting back into it next time will just take weeks
 
 ## Performance
-- [Parallel Computing](https://www.youtube.com/playlist?list=PLoROMvodv4rMp7MTFr4hQsDEcX7Bx6Odp) ([Notes](https://gfxcourses.stanford.edu/cs149/fall23/))]
-- [OpenCL courses (YT Channel)](https://www.youtube.com/@davidblack-schaffer219/courses)
+- [Stanford Parallel Computing](https://www.youtube.com/playlist?list=PLoROMvodv4rMp7MTFr4hQsDEcX7Bx6Odp) ([Notes](https://gfxcourses.stanford.edu/cs149/fall23/))]
+- [Hwu GPGPU Lectures](https://www.youtube.com/playlist?list=PLRRuQYjFhpmvu5ODQoY2l7D0ADgWEcYAX)
 - [LeetGPU](https://leetgpu.com/challenges)
 - [GPU MLOps Talks (YT Channel)](https://www.youtube.com/@GPUMODE/videos) ([slides](https://github.com/gpu-mode/lectures))
 - [llama.cpp CUDA kernels (Github)](https://github.com/ggml-org/llama.cpp/tree/master/ggml/src/ggml-cuda)

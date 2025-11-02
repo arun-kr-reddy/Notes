@@ -1,5 +1,6 @@
 # Algorithms <!-- omit from toc -->
 - [Asymptotic Notation](#asymptotic-notation)
+- [Data Structures](#data-structures)
 - [Misc](#misc)
 
 # Links <!-- omit from toc -->
@@ -41,9 +42,24 @@
 - **Logarithm:**
   - number of steps it takes to double `1` repeatedly to reach `n`
   - number of times you can halve `n` to get down to `1`
-  - **Base Asymptotically Unimportant:**
+  - example: vector size doubled `log2(n)` times to fit `n` elements
+  - **Log Base Irrelevant:**
     - `log2(n)` --> `log100(n) / log100(2)` --> `O(logn)`
+
+# Data Structures
+- **Defined by Two Aspects:**
+  - abstract operations which it supports
+  - implementation of those operations.
+- **Data Abstraction:**
+  - separates high-level operations from its underlying implementation
+  - different implementations can be optimized based on circumstances
 
 # Misc
 - **Proof by Contradiction:**
-  - assume statement's opposite is true, then prove assumption leads to logical impossibility (contradiction), thereby proving original statement as true
+  - assume statement's opposite is true
+  - then prove assumption leads to logical impossibility (contradiction)
+  - thereby proving original statement as true
+
+
+
+[todo] implement stack & queue using array

@@ -131,10 +131,12 @@
 - **Misc:**
   - prefer `array` over `vector` when size known compile-time or is small (need to fit on stack)
   - `std::string` is just `std::vector<char>` with special operations like `+=`
+  - `vector` capacity change leads to new allocation and copying of existing data
   - `deque` comes from **d**ouble **e**nded **que**ue
   - `deque` doesn't need data relocation when resized, so no memory reservation
   - `forward_list` doesn't know its size, instead use `std::distance(f_list.begin(), f_list.end())`
   - all search `O(n)` but constant factor high for list due to low spatial locality
+  - linked-lists are better with large elements to avoid copying (only pointer re-assigned)
 
 ### Utilities
 
@@ -248,7 +250,7 @@
 
 ## Algorithms
 - **Types:**
-  - **Non-Modifying:** seraching, counting, min, max
+  - **Non-Modifying:** searching, counting, min, max
   - **Modifying:** change value of elements
   - **Removing:** removing elements from sequence (usually by moving removed elements to end)
   - **Mutating:** change order of elements, reverse, rotate, shuffle, permute
