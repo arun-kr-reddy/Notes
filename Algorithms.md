@@ -4,7 +4,7 @@
 - [Misc](#misc)
 
 # Links <!-- omit from toc -->
-- [Analysis of Algorithms (Lectures)](https://www3.cs.stonybrook.edu/~skiena/373/videos/)
+- [Analysis of Algorithms (Lectures)](https://www.youtube.com/playlist?list=PLOtl7M3yp-DX6ic0HGT0PUX_wiNmkWkXx)
 
 # Asymptotic Notation
 - **RAM Model of Computation:**
@@ -59,7 +59,3 @@
   - assume statement's opposite is true
   - then prove assumption leads to logical impossibility (contradiction)
   - thereby proving original statement as true
-
-
-
-[todo] implement stack & queue using array
