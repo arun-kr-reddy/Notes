@@ -13,20 +13,20 @@
 
 ## Plan
 -  
-| #       | DSA                              | Domain                             | Extra                                                                                    |
-| ------- | -------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------- |
-| 1       | array & hashing                  | PC basics (lec 1-3)                |                                                                                          |
-| 2       | two pointers & stack             | PC parallel programming (lec 4-7)  |                                                                                          |
-| 3       | sliding window                   | PC data parallel (lec 8-10)        | cache locality (row vs column major perf)                                                |
-| 4       | binary search & linked list      | PC cache (lec 11-12)               | implement matrix multiplication, then with tiling                                        |
-| 5 (OoO) | trees (& maybe tries)            | PC FG sync + DSL (lec 13-15)       | node based tree vs B Tree vs array based (heap)                                          |
-| 6 (OoO) | heap & backtracking              | PC trans mem + finale (lec 16-19)  |                                                                                          |
-| 7       | graphs                           | CUDA basics (lec 1-4)              | implement BFS in CUDA                                                                    |
-| 8       | 1D DP                            | CUDA mem & concurrency (lec 5-7)   |                                                                                          |
-| 9       | 2D DP                            | CUDA prof & cooperation (lec 8-11) | use NSight to profile earlier implementation                                             |
-| 10      | intervals & greedy               | CUDA debug & graphs (lec 12-13)    |                                                                                          |
-| 11      | bit manipulation & math/geometry | OS revision                        | paging, context switching cost, user vs kernel space, false sharing                      |
-| 12      | advanced graphs                  | System Design for Performance      | SoC components,  designing for low latency vs high throughput, load balancing strategies |
+  | #       | DSA                              | Domain                             | Extra                                                                                    |
+  | ------- | -------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------- |
+  | 1       | array & hashing                  | PC basics (lec 1-3)                |                                                                                          |
+  | 2       | two pointers & stack             | PC parallel programming (lec 4-7)  |                                                                                          |
+  | 3       | sliding window                   | PC data parallel (lec 8-10)        | cache locality (row vs column major perf)                                                |
+  | 4       | binary search & linked list      | PC cache (lec 11-12)               | implement matrix multiplication, then with tiling                                        |
+  | 5 (OoO) | trees (& maybe tries)            | PC FG sync + DSL (lec 13-15)       | node based tree vs B Tree vs array based (heap)                                          |
+  | 6 (OoO) | heap & backtracking              | PC trans mem + finale (lec 16-19)  |                                                                                          |
+  | 7       | graphs                           | CUDA basics (lec 1-4)              | implement BFS in CUDA                                                                    |
+  | 8       | 1D DP                            | CUDA mem & concurrency (lec 5-7)   |                                                                                          |
+  | 9       | 2D DP                            | CUDA prof & cooperation (lec 8-11) | use NSight to profile earlier implementation                                             |
+  | 10      | intervals & greedy               | CUDA debug & graphs (lec 12-13)    |                                                                                          |
+  | 11      | bit manipulation & math/geometry | OS revision                        | paging, context switching cost, user vs kernel space, false sharing                      |
+  | 12      | advanced graphs                  | System Design for Performance      | SoC components,  designing for low latency vs high throughput, load balancing strategies |
 
 ## C++
 - [C++ Features (by version)](https://github.com/AnthonyCalandra/modern-cpp-features)
