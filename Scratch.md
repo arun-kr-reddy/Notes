@@ -7,9 +7,9 @@
 ## Links <!-- omit from toc -->
 
 ## To Do <!-- omit from toc -->
-- [Programming Massively Parallel Processors (Playlist)](https://www.youtube.com/playlist?list=PLRRuQYjFhpmvu5ODQoY2l7D0ADgWEcYAX)
+- [Programming Massively Parallel Processors (UIUC, 2018)](https://www.youtube.com/playlist?list=PLRRuQYjFhpmvu5ODQoY2l7D0ADgWEcYAX)
 - [GPU MLOps Talks](https://www.youtube.com/@GPUMODE/videos) ([slides](https://github.com/gpu-mode/lectures))
-- [Performance Engineering of Software Systems (Playlist)](https://www.youtube.com/playlist?list=PLUl4u3cNGP63VIBQVWguXxZZi0566y7Wf)
+- [Performance Engineering of Software Systems (MIT, 2018)](https://www.youtube.com/playlist?list=PLUl4u3cNGP63VIBQVWguXxZZi0566y7Wf)
 
 
 ## ILP

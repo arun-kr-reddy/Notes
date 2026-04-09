@@ -1,5 +1,13 @@
 # Git
-- [Setup \& Config](#setup--config)
+- [Init](#init)
+- [Basic Workflow](#basic-workflow)
+- [Branching](#branching)
+- [Remote](#remote)
+- [Undo \& Fix](#undo--fix)
+- [Stash](#stash)
+- [Tags](#tags)
+- [History](#history)
+- [Interactive Rebase](#interactive-rebase)
 
 ## Links <!-- omit from toc -->
 - [Git Commands Cheatsheet](https://www.reddit.com/r/git/comments/1oj159s/git_commands_cheat_sheet_what_should_i_add_or_fix/)
@@ -37,15 +45,15 @@
   | --------------------------------- | ---------------------------------- |
   | `git branch`                      | list branches                      |
   | `git branch <name>`               | create new branch                  |
-  | `git switch <name>`               | switch to branch                   |
-  | `git switch -c <name>`            | create branch + switch branch      |
+  | `git checkout <name>`             | switch to branch                   |
+  | `git checkout -b <name>`          | create branch + switch branch      |
   | `git merge <branch>`              | merge branch into current          |
   | `git rebase <branch>`             | rebase current onto another branch |
   | `git branch -d <name>`            | delete local branch                |
   | `git push --delete origin <name>` | delete remote branch               |
   | `git checkout <commit>`           | go-to specific commit              |
   | `git cherry-pick <commit>`        | apply specific commit              |
-- `checkout` can also checkout both files & branches, instead use `switch` & `restore`
+- `checkout` can used for files, commits, tags & branches
 
 ## Remote
 - 
@@ -65,7 +73,7 @@
 - 
   |                                    |                                                          |
   | ---------------------------------- | -------------------------------------------------------- |
-  | `git restore <file>`               | discard local changes in file                            |
+  | `git checkout -- <file>`           | discard local changes in file                            |
   | `git reset <file>`                 | unstage a file, changes kept                             |
   | `git reset --hard`                 | reset to last commit                                     |
   | `git reset --hard <commit>`        | reset to commit                                          |
@@ -93,8 +101,9 @@
   | `git tag <tag>`          | create tag      |
   | `git tag`                | list tags       |
   | `git tag -d <tag>`       | delete tag      |
-  | `git push origin <tag>`  | sush single tag |
-  | `git push origin --tags` | sush all tags   |
+  | `git push origin <tag>`  | push single tag |
+  | `git push origin --tags` | push all tags   |
+  | `git checkout <tag>`     | checkout tag    |
 
 ## History
 - 

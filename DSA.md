@@ -3,6 +3,7 @@
 - [Big-O](#big-o)
 - [Arrays](#arrays)
 - [Hash Tables](#hash-tables)
+- [Graph Theory](#graph-theory)
 
 ## Links <!-- omit from toc -->
 - [William Fiset Data Structures (Playlist)](https://www.youtube.com/playlist?list=PLDV1Zeh2NRsB6SWUrDFW2RmDotAfPbeHu)
@@ -113,3 +114,31 @@
       - instead place unique tomstone marker that is skipped during search
       - tombstones increase load factor, so removed by resize or overwritten by insert
       - lazy relocation (optimization) moves a found key to the first encountered tombstone to shorten probe path for future lookups
+
+## Graph Theory
+- **Graph Theory:** study of properties & applications of graphs (*a.k.a.* networks)  
+  *example:* social network of friends
+  - **Undirected:** edges have no orientation, *example:* bidirectional roads connecting cities, `(u,v)` == `(v,u)`
+  - **Directed (Digraph):** edges have orientations, *example:* `(u, v)` `u` bought gift for `v`
+  - **Weighted:** edges contain certain weight to represent arbitrary value (cost, distance, quantity)  
+    `(u,v,w)` third param for weight
+  - **Special:**
+    - **Tree:** undirected graph with no cycles  
+      *i.e.* connected graph with `N` nodes & `N-1` edges
+    - **Rooted Trees:** tree with designated root node where every edge either points away (out-tree) or towards it (in-tree)  
+      *example:* image??
+    - **Directed Acyclic Graphs (DAGs):** directed graphs with no cycles  
+      for representing structures with dependencies (in compiler, scheduler, build systems)  
+      *example:* image??  
+      note: all out-trees are DAGs, but vice-versa not true (example??)
+    - **Bipartite:** vertices can be split into two independent groups `U` & `V` such that every edge connects between `U` & `V`  
+      *example:* images??
+      *a.k.a.* two colorable & no-odd-length cycle
+    - **Complete:** unique edge between every pair of nodes  
+      complete graph with `n` vertices denoted as `Kn`  
+      *example:* images??
+- **Representing Graphs:**
+  - **Adjacency Matrix:** `m[i][j]` represents edge weight of going from node `i` -> `j`  
+    edge of going to itself is often assumed to be zero, so diagonals all zeroes
+
+[CONTINUE](https://youtu.be/eQA-m22wjTQ?list=PLDV1Zeh2NRsDGO4--qE8yH72HFL1Km93P&t=611)
