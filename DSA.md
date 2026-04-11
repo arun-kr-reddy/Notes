@@ -3,7 +3,10 @@
 - [Big-O](#big-o)
 - [Arrays](#arrays)
 - [Hash Tables](#hash-tables)
-- [Graph Theory](#graph-theory)
+- [Graphs](#graphs)
+  - [Types](#types)
+  - [Representation](#representation)
+  - [Common Problems](#common-problems)
 
 ## Links <!-- omit from toc -->
 - [William Fiset Data Structures (Playlist)](https://www.youtube.com/playlist?list=PLDV1Zeh2NRsB6SWUrDFW2RmDotAfPbeHu)
@@ -115,30 +118,160 @@
       - tombstones increase load factor, so removed by resize or overwritten by insert
       - lazy relocation (optimization) moves a found key to the first encountered tombstone to shorten probe path for future lookups
 
-## Graph Theory
-- **Graph Theory:** study of properties & applications of graphs (*a.k.a.* networks)  
-  *example:* social network of friends
-  - **Undirected:** edges have no orientation, *example:* bidirectional roads connecting cities, `(u,v)` == `(v,u)`
-  - **Directed (Digraph):** edges have orientations, *example:* `(u, v)` `u` bought gift for `v`
-  - **Weighted:** edges contain certain weight to represent arbitrary value (cost, distance, quantity)  
-    `(u,v,w)` third param for weight
-  - **Special:**
-    - **Tree:** undirected graph with no cycles  
-      *i.e.* connected graph with `N` nodes & `N-1` edges
-    - **Rooted Trees:** tree with designated root node where every edge either points away (out-tree) or towards it (in-tree)  
-      *example:* image??
-    - **Directed Acyclic Graphs (DAGs):** directed graphs with no cycles  
-      for representing structures with dependencies (in compiler, scheduler, build systems)  
-      *example:* image??  
-      note: all out-trees are DAGs, but vice-versa not true (example??)
-    - **Bipartite:** vertices can be split into two independent groups `U` & `V` such that every edge connects between `U` & `V`  
-      *example:* images??
-      *a.k.a.* two colorable & no-odd-length cycle
-    - **Complete:** unique edge between every pair of nodes  
-      complete graph with `n` vertices denoted as `Kn`  
-      *example:* images??
-- **Representing Graphs:**
-  - **Adjacency Matrix:** `m[i][j]` represents edge weight of going from node `i` -> `j`  
-    edge of going to itself is often assumed to be zero, so diagonals all zeroes
+## Graphs
+- **Graph:** non-linear data structure consisting of nodes and edges that connect them  
+  `(u,v)` used to represent from `u` to `v`
 
-[CONTINUE](https://youtu.be/eQA-m22wjTQ?list=PLDV1Zeh2NRsDGO4--qE8yH72HFL1Km93P&t=611)
+### Types
+- **Undirected:** edges have no orientation, `(u,v) == (v,u)`  
+  *example:* bidirectional roads connecting cities
+  ```mermaid
+  graph LR
+    A --- B
+    A --- C
+    B --- D
+    C --- D
+    D --- E
+    C --- E
+  ```
+- **Directed (Digraph):** edges have orientations  
+  *example:* `u` bought gift for `v`
+  ```mermaid
+  graph LR
+    A --> B
+    B --> C
+    A --> C
+    C --> D
+    D --> A
+  ```
+- **Weighted:** edges contain certain weight to represent arbitrary value (cost, distance, quantity)  
+  `(u,v,w)` third param for weight
+  ```mermaid
+  graph LR
+    A ---|7| B
+    A ---|10| C
+    B ---|8| D
+    C ---|2| D
+    B ---|3| E
+  ```
+- **Special:**
+  - **Tree:** undirected graph with no cycles (*i.e.* `N` nodes with `N-1` edges)
+    ```mermaid
+    graph TD
+      A --- B
+      A --- C
+      A --- D
+      B --- E
+      B --- F
+      D --- G
+    ```
+  - **Rooted Trees:** tree with designated root node where every edge either points away (out-tree) or towards it (in-tree)
+    ```mermaid
+    graph TD
+      A --> B
+      A --> C
+      B --> D
+      B --> E
+      C --> F
+    ```
+  - **Directed Acyclic Graphs (DAGs):** directed graphs with no cycles  
+    used for representing structures with dependencies (in compiler, build systems)  
+    **note:** all out-trees are DAGs, but vice-versa not true
+    ```mermaid
+    graph LR
+      A --> B
+      A --> C
+      B --> D
+      C --> D
+      C --> E
+      D --> F
+      E --> F
+    ```
+  - **Bipartite:** vertices can be split into two independent groups `U` & `V` such that every edge connects between `U` & `V`  
+    *a.k.a.* two colorable and no-odd-length cycle
+    ```mermaid
+    graph LR
+      A --- B
+      B --- C
+      C --- D
+      D --- E
+      E --- F
+      F --- C
+
+    ```
+    ```mermaid
+    graph LR
+      subgraph U
+          direction TB
+          A
+          C
+          E
+      end
+      subgraph V
+          direction TB
+          B
+          D
+          F
+      end
+      A --- B
+      B --- C
+      C --- D
+      D --- E
+      E --- F
+      F --- C
+    ```
+  - **Complete:** there exists an unique edge between every pair of nodes (represented as `Kn`for `n` vertices)  
+    *i.e.* each node has `n-1` connections
+    ```mermaid
+    graph LR
+      A --- B
+      A --- C
+      A --- D
+      A --- E
+      B --- C
+      B --- D
+      B --- E
+      C --- D
+      C --- E
+      D --- E
+    ```
+
+### Representation
+- **Adjacency Matrix:** `m[i][j]` represents edge weight of going from node `i` -> `j`  
+  edge of going to itself is often assumed to be zero
+  ```mermaid
+  graph LR
+    A -->|2| B
+    A -->|5| C
+    B -->|4| D
+    C -->|2| D
+    B -->|3| A
+    D -->|3| B
+    D -->|1| C
+  ```
+  ```
+  [*  A  B  C  D]
+  [A  0  2  5  0]
+  [B  3  0  0  4]
+  [C  0  0  0  2]
+  [D  0  3  1  0]
+  ```
+  - **Pros:** space efficient for dense graphs, `O(1)` edge/weight lookup
+  - **Cons:** `O(n^2)` space, iterating all edges takes `O(n^2)` (must scan even 0s)
+- **Adjacency List:** map where keys are nodes and values are (edge, weight) pairs
+  ```
+  A -> [(B, 2), (C, 5)]
+  B -> [(A, 3), (D, 4)]
+  C -> [(D, 2)]
+  D -> [(B, 3), (C, 1)]
+  ```
+  - **Pros:** space efficient for sparse graphs, iterating over all edges efficient
+  - **Cons:** edge weight lookup `O(num_edges)` (for a key)
+- **Edge List:** unordered list of edges (with weight)
+  ```
+  [(A, B, 2), (A, C, 5), (B, D, 4), (C, D, 2), (B, A, 3), (D, B, 3), (D, C, 1)]
+  ```
+  - **Pros:** space efficient for sparse graphs, iterating over all edges efficient
+  - **Cons:** edge weight lookup `O(num_edges)`
+
+### Common Problems

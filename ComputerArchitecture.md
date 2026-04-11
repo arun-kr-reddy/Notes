@@ -1,5 +1,6 @@
 # Computer Architecture
 - [Introduction](#introduction)
+- [Instruction Set Architecture](#instruction-set-architecture)
 - [Parallel Computing](#parallel-computing)
 - [Misc](#misc)
 
@@ -11,6 +12,69 @@
 
 ## Introduction
 - **Abstraction:** higher level only needs to know about interface to lower level, not how its implemented
+- **Moore's law:**
+  - observation of historical trend that transistor density doubles approximately every two years
+  - smaller transistors allowed higher clock speed and more complex instruction-level-parallelism features
+  - clock `f ∝ V` volatage and power `p = f * V^2`, so `p ∝ f^3`
+  - practically general-purpose instruction streams (due to data dependencies & branches) rarely sustain more than 4 instructions-per-cycle
+  - so now focus on parallelism (multi-core) and specialization (NPUs, ISPs)
+- **Iron Law of Performance:** `num_instructions * cycles_per_instruction x clock_cycle_time` gives time taken to execute a program
+
+## Instruction Set Architecture
+- **Von-Neumann Model:** instruction & data kept in same memory and share a single bus  
+  **Harvard Model:** having separate instruction & data memory and buses, can fetch instruction & data at the same time  
+  modern processors use both Von-Neumann (RAM holds everything) and Harvard (separate I & D caches)
+- **Data-Flow Model:**
+  - instruction fetched & executed only when its input operands are ready
+  - no instruction pointer required
+- **Register:**
+  - high speed internal storage to hold operands & results from the ALU
+  - typically one register contains one word
+  - **Register File/Set:** set of registers that can be manipulated by instructions  
+    *example:* ARMv7-A has `32 x 32bit` registers
+- **Special Purpose Registers:**
+  - **Stack Pointer (`SP`):** address of top of the stack
+  - **Link Register (`LR`):** return address
+  - **Instruction Register (`IR`):** current instruction
+  - **Program Counter (`PC`) / Instruction Pointer (`IP`):** address of next instruction to be fetched
+  - **Program Status Register (`PSR`):** zero (`Z`), negative (`N`), carry (`C`), overflow (`V`)
+  - **Memory Address Register (`MAR`):** address to read/write
+  - **Memory Data/Buffer Register (`MDR`/`MBR`):** data coming from read or to be written
+    - to read data: source address --> `MAR`, then wait for data --> `MDR`
+    - to write data: destination address --> `MAR` and data --> `MDR`, then trigger "write enable" signal
+- **Instruction Set Architecture (ISA):**
+  - abstract interface that defines how software interacts with the hardware
+  - specifies memory organization, register set and instruction set (opcodes, data types & addressing modes)
+  - **Instruction:** fundamental unit of execution, made up of opcode & operands
+  - ISA can have large or small set of opcodes
+    - CISC: do more per instruction, but needs complex hardware
+    - RISC: simpler & faster instructions, but shifts burden of optimization to compiler
+  - **Semantic Gap:** how closely instructions map to high-level language constructs  
+    *example:* instructions that work on matrix direcly lead to smaller semantic gap
+- **Instruction Cycle:**
+  - sequence of steps that instruction goes through to be executed
+  - not all six steps are required for each instruction  
+    *example:* `ADD R0, R1, R2` doesn't need to evaluate address
+  - **Fetch:** obtain instruction from memory (via `PC`) and load it into `IR`
+  - **Decode:** translate the opcode to detemine the operation
+  - **Evaluate Address:** computes memory locations of operands
+  - **Fetch Operands:** retreive operands from registers or memory
+  - **Execute:** perform actual computation or logic
+  - **Store Result:** write outpuit to destination
+- **Micro-Architecture:**
+  - hardware-specific implementation of ISA, which keeps improving while maintaining constant ISA interface  
+    *example:* `add` instruction vs underlying adder implementation
+  - hardware may execute instructions in any order, final results visible according to ISA semantics
+  - enables hardware features like pipelining, speculative execution, OoO execution without any SW changes
+- **Architectural State:**
+  - specific hardware components that represent current state of a program as defined by ISA
+  - **example:** `PC`, register file, memory
+-  
+  | Single Cycle Machine                        | Multi-Cycle Machine                                              |
+  | ------------------------------------------- | ---------------------------------------------------------------- |
+  | exactly 1 clock cycle per instruction       | multiple cycles as needed                                        |
+  | architectural state updated after execution | internal state during processing, architectural state at the end |
+  | cycle time dictated by slowest instruction  | need extra registers to store intermediate results               |
 
 ## Parallel Computing
 - **Parallel Computer:** collection of processing elements that cooperate to solve problems quickly
@@ -21,12 +85,6 @@
 - **Superscalar Execution:**
   - processor automatically finds independent instructions to run in parallel on multiple execution units
   - performance speedup tends to flatten after ~4 IPC is reached
-- **Why Parallelism:**
-  - earlier single-threaded performance doubling every ~18 months
-  - smaller transistors allowed for higher clock and more transistors in same area (superscalar execution)
-  - clock increases ==> volatage increases, power is freq * voltage^2, so it increases by power of 3
-  - no further benefit from ILP after 4 IPC
-  - so architects adding more execution units and specialized units (image processing, neural processing)
 - **Stall:**
   - processor cannot run the next instruction because future instructions depend on previous instruction that is not yet complete
   - accessing memory major source of stalls
