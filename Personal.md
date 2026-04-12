@@ -44,7 +44,7 @@
 - energy should be spent on making money and keeping yourself healthy & happy
 
 ## ESOP Taxation
-- convert INR <-> USD using SBI TT buying rate from the last day of previous month
+- convert INR ↔ USD using SBI TT buying rate from the last day of previous month
 - check form-12B for (already-taxed) combined ESOP (RSU + ESPP) income, and tax-computation-sheet for the RSU & ESPP split
 
 ### ESPP

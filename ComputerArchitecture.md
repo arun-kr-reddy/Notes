@@ -1,6 +1,8 @@
 # Computer Architecture
 - [Introduction](#introduction)
 - [Instruction Set Architecture](#instruction-set-architecture)
+- [Pipelining](#pipelining)
+- [Out-of-Order Execution](#out-of-order-execution)
 - [Parallel Computing](#parallel-computing)
 - [Misc](#misc)
 - [Scratch](#scratch)
@@ -41,8 +43,8 @@
   - **Program Status Register (`PSR`):** zero (`Z`), negative (`N`), carry (`C`), overflow (`V`)
   - **Memory Address Register (`MAR`):** address to read/write
   - **Memory Data/Buffer Register (`MDR`/`MBR`):** data coming from read or to be written
-    - to read data: source address --> `MAR`, then wait for data --> `MDR`
-    - to write data: destination address --> `MAR` and data --> `MDR`, then trigger "write enable" signal
+    - to read data: source address → `MAR`, then wait for data → `MDR`
+    - to write data: destination address → `MAR` and data → `MDR`, then trigger "write enable" signal
 - **Instruction Set Architecture (ISA):**
   - abstract interface that defines how software interacts with the hardware
   - specifies memory organization, register set and instruction set (opcodes, data types & addressing modes)
@@ -69,13 +71,98 @@
   - enables hardware features like pipelining, speculative execution, OoO execution without any SW changes
 - **Architectural State:**
   - specific hardware components that represent current state of a program as defined by ISA
-  - **example:** `PC`, register file, memory
--  
+  - *example:* `PC`, register file, memory
+- 
   | Single Cycle Machine                        | Multi-Cycle Machine                                              |
   | ------------------------------------------- | ---------------------------------------------------------------- |
   | exactly 1 clock cycle per instruction       | multiple cycles as needed                                        |
   | architectural state updated after execution | internal state during processing, architectural state at the end |
   | cycle time dictated by slowest instruction  | need extra registers to store intermediate results               |
+
+## Pipelining
+- **Pipelining:**
+  - with multi-cycle design, some hardware resources are idle during different phases of instruction processing cycle
+  - so assembly-line processing of instructions for higher instruction throughput (`throughput ∝ num_stages`) and better hardware utilization
+  - ![](./Media/Pipeline_Execution.png)
+  - **Steady State:** when the pipeline is full and throughput is 1 instruction/cycle
+- **Dependencies:**
+  - one instruction relies on the results or resources of a previous one
+  - **Structural:** two instructions in the pipeline need the same hardware at the exact same time  
+    can be eliminated by duplicating hardware resources
+  - **Data:** current instruction needs previous instruction to complete
+    - **Read-after-Write:** true dependency on previous instruction's output value  
+      *a.k.a.* true dependency
+    - **Write-after-Read** & **Write-after-Write:** dependency on a register name only not on value due to limited num registers  
+      exists due to lack of register IDs (*i.e.* names), *a.k.a.* false dependencies
+    - 
+      ```cpp
+      // RAW
+      r3 = r1 * r2;
+      r5 = r3 + r4; // must wait for r3 to be computed
+
+      // WAR
+      r3 = r1 * r2;
+      r1 = r4 + r5; // must not overwrite "r1" before it is read
+
+      // WAW
+      r3 = r1 * r2;
+      r3 = r4 + r5; // must not overwrite "r3" till multiply done
+      ```
+  - **Control:** next instruction known only once branch is evaluated  
+    *i.e.* data dependency on the instruction pointer (`IP`/`PC`)
+- **Interlocking:**
+  - detection of dependence between instructions to guarantee correct execution
+  - **HW-based (Stall):** dependent instruction stalled (`NOP`s into next stage) until its source data is ready
+  - **SW-based (Bubble):** compiler inserts `NOP`s to ensure stalled instruction waits
+  - *example:* purple instruction delays execution  
+    ![](./Media/Pipeline_Execution_Bubble.png)
+- **Data Forwarding/Bypassing:**
+  - supply data directly from internal pipeline registers to the ALU, bypassing the register file
+  - resolves most RAW dependencies without stalls (cannot solve use-after-`load` hazards)
+- **Precise:** maintain consistent architectural state where all preceding instructions have retired/committed their results, and no subsequent instructions have modified the state (*i.e.* original program order)  
+  **note:** required for exception handling, and useful for debugging
+
+## Out-of-Order Execution
+- to maximize throughput, independent instructions may overlap long-latency operations  
+  but they precise architectural state must be maintained
+- **Re-Order Buffer:**
+  - instructions execute & complete out-of-order but results are buffered in ROB
+  - results committed in-order (ROB → register file) when oldest instruction has completed without exceptions
+  - ![](./Media/Reorder_Buffer.png)
+  - *example:* ROB execution for independent operations
+    ![](./Media/ROB_Execution.png)
+- **ROB with Data Dependencies:**
+  - operands are sourced from register file, reorder buffer or directly via bypass path
+  - **Register Renaming:** register mapped to ROB entry of (pending) instruction which will provide the data
+  - instruction upon completion broadcasts its result to every instruction waiting for that ROB entry
+  - since ROB (unlike register file) is not constrained by ISA, it can be very large, thus eliminating false (WAW & WAR) dependencies
+  - true (RAW) dependency will still stall the in-order pipeline
+- **Out-of-Order Execution:**
+  - move dependent instructions out of the way of independent ones, ensuring true data dependency does not stall the entire processor
+  - dependent instructions moved into rest areas (reservation stations), while monitoring their source values (or HW freeing up)
+    instruction dispatched from rest areas when all source values are available
+  - *i.e.* instructions dispatched in dataflow order, but not exposed to ISA
+  - tolerates long-latency operations (like memory) by concurrently executing independent operations
+  - *a.k.a.* dynamic instruction scheduling
+- **Instruction/Scheduling Window:**
+  - all decoded but not yet retired instructions
+  - data-flow graph limited to this window is dynamically built
+- ***Example:* Tomasulo's Algorithm:**
+  - assign tag (register renaming) if dependency exists, else read value directly
+  - buffer instruction (with tag and/or data values) to functional unit's RS
+  - wait for data/resource dependencies to resolve, wakes up once its required tag is broadcasted
+  - completed results & tags are broadcasted to all waiting RS entries and stored in ROB
+  - register file only updated when instruction retires from ROB
+  - ![](./Media/OoO_Execution.png)
+- **Memory Dependency Handling:**
+  - memory address (& dependency) un-known until address computation is done
+  - **Memory Disambiguation Problem:** challenge of determining whether two memory operations refer to the same physical address when they are executed out-of-order
+  - approaches:
+    - **Conservative:** load stalled till all prior stores are resolved
+    - **Speculative:** load executes immediately assuming no conflict  
+      but if store calculates same address, pipeline later flushed
+  - **Store-to-Load Forwarding:** stores are buffered before committing to cache/memory, subsequent load can intercept data from store buffer direcly  
+    *i.e.* data forwarding/bypassing of memory
 
 ## Parallel Computing
 - **Parallel Computer:** collection of processing elements that cooperate to solve problems quickly

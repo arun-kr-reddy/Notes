@@ -70,13 +70,13 @@
     ```
 - **Reductions:**
   - vector space to scalar space
-  - `simd_mask` --> `bool`
+  - `simd_mask` → `bool`
     |                                                    |                                 |
     | -------------------------------------------------- | ------------------------------- |
     | `all_of(mask)`, `any_of(mask)`, `none_of(mask)`    | return `bool`                   |
     | `reduce_count(mask)`                               | count `true` lanes              |
     | `reduce_min_index(mask)`, `reduce_max_index(mask)` | index of first/last `true` lane |
-  - `simd` --> `T`
+  - `simd` → `T`
     |                                        |                               |
     | -------------------------------------- | ----------------------------- |
     | `reduce(simd)`                         | accumulation                  |
@@ -85,7 +85,7 @@
   - `std::simd<T>` is data-level parallelism (*i.e.* SIMD)
   - `std::simd<T, std::simd<T> * N>` is instruction-level parallelism along with DLP (*i.e.* `N`*SIMD)
   - ILP forces compiler to generate multiple independent instructions (similar to unrolling)
-- ***Example:* ARGB --> Grayscale:**
+- ***Example:* ARGB → Grayscale:**
   - assume 32bit `0xAARRGGBB` image
   - since 8bit per channel, `uint8*uint8` needs `uint16` and `uint16+uint16` needs `uint17`, so 32bit output
   - 

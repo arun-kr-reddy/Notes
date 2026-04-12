@@ -76,4 +76,4 @@
   - NaN is not equal to anything, comparison always returns false (including itself)  
     *example:* `nan == nan`, `nan == 5`, `nan < 5`, `nan > 5` returns false
   - calculations involving NaN become NaN  
-    *example:* `NaN + 10 --> NaN`, `NaN * 0 --> NaN`
+    *example:* `NaN + 10 → NaN`, `NaN * 0 → NaN`

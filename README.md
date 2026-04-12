@@ -21,3 +21,10 @@
 ## Misc
 - [Personal](./Personal.md)
 - [Scratch](./Scratch.md)
+
+## Symbols
+- 
+  |              |           |
+  | ------------ | --------- |
+  | arrows       | ← ↑ → ↓ ↔ |
+  | proportional | ∝         |

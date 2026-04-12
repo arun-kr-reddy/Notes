@@ -6,7 +6,7 @@
 - [Graphs](#graphs)
   - [Types](#types)
   - [Representation](#representation)
-  - [Common Problems](#common-problems)
+  - [Depth \& Breadth First Search](#depth--breadth-first-search)
 
 ## Links <!-- omit from toc -->
 - [William Fiset Data Structures (Playlist)](https://www.youtube.com/playlist?list=PLDV1Zeh2NRsB6SWUrDFW2RmDotAfPbeHu)
@@ -237,7 +237,7 @@
     ```
 
 ### Representation
-- **Adjacency Matrix:** `m[i][j]` represents edge weight of going from node `i` -> `j`  
+- **Adjacency Matrix:** `m[i][j]` represents edge weight of going from node `i` → `j`  
   edge of going to itself is often assumed to be zero
   ```mermaid
   graph LR
@@ -274,4 +274,181 @@
   - **Pros:** space efficient for sparse graphs, iterating over all edges efficient
   - **Cons:** edge weight lookup `O(num_edges)`
 
-### Common Problems
+### Depth & Breadth First Search
+- ![](./Media/Graph_DFS_BFS.gif)
+- **Depth-First Search:**
+  - start at a root node and explore as far as possible along each branch before backtracking
+  - using a stack:
+    - call stack (recursion):
+      ```cpp
+      visited(num_nodes) = {false};
+
+      // start DFS from node zero
+      start_node = 0;
+      dfs(start_node);
+
+      void dfs(at) {
+        // base case (stop calling itself and start returning)
+        if (visited[at])
+          return;
+
+        // marking & exploring
+        visited[at] = true;
+        neighbors = graph[at];
+
+        // recursive step
+        for (next : neighbors)
+          dfs(next)
+      }
+      ```
+    - explicit stack (iterative)
+      ```cpp
+      visited(num_nodes) = {false};
+      stack();
+      start_node = 0;
+
+      dfs() {
+        stack.push(start_node);
+
+        while (stack.size()) {
+          at = stack.pop();
+
+          // skip already-visited nodes added by different neighbors
+          if (visited[at])
+            continue;
+
+          visited[at] = true;
+
+          neighbors = graph[at];
+          for (next : neighbors) {
+            // push nodes to visit them later
+            stack.push(next);
+            // can add "(!visited[next])" for nodes that will later hit "(visited[at])"
+          }
+        }
+      }
+      ```
+- ***Example:* Connected Components:**
+  - maximal subset of nodes where each node is reachable from any other within that subset  
+    *i.e.* mark/paint all reachable nodes as being part of same component
+  - 
+    ```mermaid
+    graph TD
+      subgraph Component_1 [ID: 1]
+          0 --- 1
+          1 --- 2
+          2 --- 0
+      end
+
+      subgraph Component_2 [ID: 2]
+          3 --- 4
+      end
+
+      subgraph Component_3 [ID: 3]
+          5
+      end
+    ```
+  - 
+    ```cpp
+    dfs(at, current_label) {
+        if (visited[at])
+            return;
+
+        visited[at] = true;
+        labels[at] = current_label; // paint with current label
+
+        neighbors = graph[at];
+        for (next : neighbors) {
+            dfs(next, current_label);
+        }
+    }
+
+    // iterate over every node
+    for (i = 0; i < n; i++) {
+        // visited/painted nodes skipped
+        if (!visited[i]) {
+            // increment to new label
+            count++;
+            // paint entire component with new label
+            dfs(i, count);
+        }
+    }
+    ```
+- **Bread-First Search:**
+  - start at a root node and explore all neighbor nodes first before moving to next level neighbors
+  - implementation uses a queue
+    ```cpp
+    visited(num_nodes) = {false};
+    queue();
+    start_node = 0;
+
+    bfs(start_node) {
+      visited[start_node] = true; // mark immediately when enqueued
+      queue.push_back(start_node);
+
+      while (queue.size()) {
+        at = queue.pop_front();
+
+        neighbors = graph[at];
+        for (next : neighbors) {
+          if (!visited[next]) {
+            // mark as visited immediately when enqueued
+            // to prevent adding same node multiple times
+            // note: DFS dives deep quickly so this is an optimization,
+            // but BFS explores in layers, so queue can grow exponentially
+            visited[next] = true;
+            queue.push_back(next);
+          }
+        }
+      }
+    }
+    ```
+- ***Example:* Shortest Path:**
+  - find the shortest path between two nodes by leaving a trail of breadcrumbs
+  - 
+    ```cpp
+    visited(num_nodes) = {false};
+    parent(num_nodes) = {-1};
+    queue();
+    start_node = 0;
+
+    bfs(start_node, target, parent) {
+      visited[start_node] = true;
+      queue.push_back(start_node);
+
+      while (queue.size()) {
+        at = queue.pop_front();
+
+        // premature stop if target reached
+        if (at == target)
+          break;
+
+        neighbors = graph[at];
+        for (next : neighbors) {
+          if (!visited[next]) {
+            visited[next] = true;
+            parent[next] = at; // set parent when node seen first time
+            queue.push_back(next);
+          }
+        }
+      }
+    }
+
+    reconstruct_path(start, target, parent) {
+      path[];
+      // start at the end and follow parents back to the start
+      for (at = target; at != -1; at = parent[at]) {
+        path.push_back(at);
+      }
+
+      reverse(path); // [target...start] → [start...target]
+
+      // if first element != start, no path exists
+      if (path[0] == start)
+        return path;
+      else
+        return [];
+    }
+    ```
+
+[CONTINUE](https://www.youtube.com/watch?v=KiCBXu4P-2Y&list=PLDV1Zeh2NRsDGO4--qE8yH72HFL1Km93P&index=6)
