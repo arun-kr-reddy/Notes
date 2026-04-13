@@ -3,6 +3,10 @@
 - [Instruction Set Architecture](#instruction-set-architecture)
 - [Pipelining](#pipelining)
 - [Out-of-Order Execution](#out-of-order-execution)
+- [Superscalar Execution](#superscalar-execution)
+- [Very-Long Instruction Word](#very-long-instruction-word)
+- [Systolic Arrays](#systolic-arrays)
+- [Decoupled Access Execute](#decoupled-access-execute)
 - [Parallel Computing](#parallel-computing)
 - [Misc](#misc)
 - [Scratch](#scratch)
@@ -164,23 +168,60 @@
   - **Store-to-Load Forwarding:** stores are buffered before committing to cache/memory, subsequent load can intercept data from store buffer direcly  
     *i.e.* data forwarding/bypassing of memory
 
+## Superscalar Execution
+- **Superscalar Execution:**
+  - hardware automatically identifies & dispatches independent instructions to multiple execution units simultaneously
+  - `N`-wide superscalar capable of sustaining peak thoughput of `N` IPC
+  - superscalar & out-of-order execution are orthogonal concepts  
+   *i.e.* can have all four combinations of processors: [in-order, out-of-order] x [scalar, superscalar]
+- **Dependency Checking:**
+  - hardware ensures that instructions fetched in the same cycle are independent of each other
+  - OoO execution only has dependency checks across different pipeline stages  
+    superscalar additionaly has checks between concurrent instructions in the same pipeline stage at the same time
+
+## Very-Long Instruction Word
+- **Very-Long Instruction Word (VLIW):**
+  - multiple independent instructions packed/bundled together by the compiler
+  - simple hardware which needs no dependency checking  
+    compiler takes care of finding instruction level parallelism
+  - execution of instructions in the bundle guaranteed to be atomic
+  - recompilation required when execution width (`N`) or functional units change
+- **Example: Qualcomm Hexagon DSP:**
+  - each core can process 4 instructions concurrently
+  - some VLIW slots are specialized, *example:* load/store only in first two slots
+  - ![](./Media/Hexagon_Core.png)
+
+## Systolic Arrays
+- **Systolic Array:**
+  - grid of processing elements (nodes) that rhythmically compute and pass data
+  - each node independently computes a partial result based on data received from its upstream neighbours, stores the result within itself and passes it downstream
+  - maximizes computation done on a each piece of data brought from memory
+  - ![](./Media/Systolic_Array.gif)
+- **Example: Google Tensor Processing Units:**
+  - fixed weights are pre-loaded into nodes, reducing power-hungry memory access
+  - each node performs a multiply-accumulate every clock cycle
+  - **Horizontal Move:** input data enters from the left, multiplied by the weight, and un-modified data passed to the right
+  - **Vertical Accumulation:** multiplication results added to incoming partial sums from above, then passed downward
+    *i.e.* `new_partial_sum = (input_data * fixed_weight) + partial_sum_from_above`
+  - ![](./Media/Systolic_Array_TPU.png)
+
+## Decoupled Access Execute
+- **Decoupled Access Execute:**
+  - decouple operand access from execution by (compiler) splitting them into two independent instruction streams  
+    synchronization between two streams is only required when handling branch instructions
+  - access unit: address calculation and data fetching from memory  
+    execute unit: processing operands pulled from data queue
+  - access stream typically runs ahead of the execute stream  
+    *i.e.* pre-fetching data to hide memory latency
+  - enables limited OoO execution with much simpler hardware
+  - ![](./Media/Decoupled_Access_Execute.png)
+
 ## Parallel Computing
 - **Parallel Computer:** collection of processing elements that cooperate to solve problems quickly
 - **Fast != Efficient:**
   - just because program runs faster on parallel computer, doesn't mean its using the hardware efficiently
   - *example:* 2x speedup with 10 processors
   - achieving efficient processing almost always comes down to accessing data efficiently
-- **Superscalar Execution:**
-  - processor automatically finds independent instructions to run in parallel on multiple execution units
-  - performance speedup tends to flatten after ~4 IPC is reached
-- **Stall:**
-  - processor cannot run the next instruction because future instructions depend on previous instruction that is not yet complete
-  - accessing memory major source of stalls
-    ```cpp
-    ld r0 mem[r2]
-    ld r1 mem[r3]
-    add r0, r0, r1 // needs data from [r2] & [r3]
-    ```
 - **Cache:**
   - on-chip storage that maintains a copy of a subset of values in memory
   - if address is "in cache", it can be loaded/stored more quickly that if it only resided in memory
