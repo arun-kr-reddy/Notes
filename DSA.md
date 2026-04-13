@@ -314,6 +314,7 @@
           at = stack.pop();
 
           // skip already-visited nodes added by different neighbors
+          // required in case un-visited (at that time) node was pushed to stack multiple times
           if (visited[at])
             continue;
 
@@ -321,9 +322,10 @@
 
           neighbors = graph[at];
           for (next : neighbors) {
-            // push nodes to visit them later
-            stack.push(next);
-            // can add "(!visited[next])" for nodes that will later hit "(visited[at])"
+            if (!visited[next]) { // smaller stack, else will hit "(visited[at])" anyway
+              // push nodes to visit them later
+              stack.push(next);
+            }
           }
         }
       }
@@ -376,6 +378,8 @@
     ```
 - **Bread-First Search:**
   - start at a root node and explore all neighbor nodes first before moving to next level neighbors
+  - **note:** `if (!visited[next])` is an optimization for DFS since it dives deep quickly
+    but BFS explores in layers (without `visited` check) so queue can grow exponentially (`O(V^2) == O(E)` for dense graphs)
   - implementation uses a queue
     ```cpp
     visited(num_nodes) = {false};
@@ -394,8 +398,6 @@
           if (!visited[next]) {
             // mark as visited immediately when enqueued
             // to prevent adding same node multiple times
-            // note: DFS dives deep quickly so this is an optimization,
-            // but BFS explores in layers, so queue can grow exponentially
             visited[next] = true;
             queue.push_back(next);
           }
