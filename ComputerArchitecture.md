@@ -7,6 +7,8 @@
 - [Very-Long Instruction Word](#very-long-instruction-word)
 - [Systolic Arrays](#systolic-arrays)
 - [Decoupled Access Execute](#decoupled-access-execute)
+- [Fine-Grained Multithreading](#fine-grained-multithreading)
+- [Branch Prediction](#branch-prediction)
 - [Parallel Computing](#parallel-computing)
 - [Misc](#misc)
 - [Scratch](#scratch)
@@ -215,6 +217,75 @@
     *i.e.* pre-fetching data to hide memory latency
   - enables limited OoO execution with much simpler hardware
   - ![](./Media/Decoupled_Access_Execute.png)
+
+## Fine-Grained Multithreading
+- **Fine-Grained Multithreading:**
+  - fetch-engine fetches instruction from a different thread every cycle  
+    *i.e.* no two instructions from a thread is the pipeline concurrently
+  - hardware maintains multiple thread contexts (`PC` + registers)
+  - tolerates dependency latencies by overlapping it with useful work from other threads
+  - maximized throughput but degrades single thread performance (one instruction fetched every `N` cycles)
+  - ![](./Media/Fine_Grained_Multithreading.png)
+
+## Branch Prediction
+- **Branch Problem:** next fetch-address unknown until control-flow instruction is resolved several cycles later in the pipeline
+- **Branch Penalty:** number of speculatively executed instructions that must be discarded in case of branch mis-prediction
+- **Branch Prediction:**
+  - guess the direction of a branch and target address before the branch instruction is actually executed
+  - **Static:**
+    - guess is fixed at compile time
+    - naive implementations like always not-taken and always taken
+    - heuristics based implementations like profile (run) based and program (code) analysis based  
+      *example:* `nullptr` check rarely true
+  - **Dynamic:**
+    - hardware guesses based on dynamic information collected at runtime
+    - **1-Bit Predictor:**
+      - guess branch will take same direction as its last instance
+      - *example:* mispredicts last iteration for loop branches
+    - **2-Bit Predictor:**
+      - add hysteresis to one-bit predictor so that the prediction does not change on a single different outcome
+      - *i.e.* needs 2 opposing outcomes to flip prediction direction
+      - ![](./Media/Two_Bit_Predictor.png)
+    - **Branch History Predictor:**
+      - **Local:** strictly based on that specific instruction's past direction
+      - **Global:** based on previous different branches' outcome assuming correlation  
+        *example:* both conditions correlated
+        ```cpp
+        if (x < 1) { ... }
+        if (x > 1) { ... }
+        ```
+      - ![](./Media/Global_Branch_History_Predictor.png)
+- **Delayed Branching:**
+  - compiler inserts instructions executed regardless of branch direction immediately after control instruction
+  - ```cpp
+    // base
+    ADDI R1, R1, 1;
+    BEQ R2, R3, LABEL;
+    NOP; // delay slot
+
+    // optimized
+    BEQ R2, R3, LABEL;
+    ADDI R1, R1, 1; // moved to delay slot
+    ```
+- **Loop Un-Rolling:**
+  - replicate loop body multiple times to increase work done per iteration
+  - reduces loop control logic and increases instruction-level parallelism (more independent instructions)  
+    increase in binary size which increases instruction cache misses
+- **Predicated Execution:**
+  - compiler converts control dependency to data dependency
+  - instruction result committed only if predicate passes, else similar to `NOP`
+  - *example:* remove branch using conditional move (`CMOV`)
+    ```cpp
+    if (a == 5) {
+      b = 4;
+    } else {
+      b = 3;
+    }
+
+    CMPEQ condition, a, 5;
+    CMOV condition, b, 4;
+    CMOV !condition, b, 3;
+    ```
 
 ## Parallel Computing
 - **Parallel Computer:** collection of processing elements that cooperate to solve problems quickly
