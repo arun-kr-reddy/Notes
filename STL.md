@@ -117,8 +117,8 @@
     vec.emplace(pos_itr, initializer_list);      // similar to insert
     vec.emplace_back(pos_itr, initializer_list); // similar to push_back
     ```
-- **List Special Functions:** optimized for pointer manipulation
-  - 
+- **List Special Functions:**
+  - optimized for pointer manipulation
     ```cpp
     lst.sort();             // sort elements
     lst.merge(another_lst); // merge sorted lists

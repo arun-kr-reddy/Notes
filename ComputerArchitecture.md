@@ -59,7 +59,7 @@
     - CISC: do more per instruction, but needs complex hardware
     - RISC: simpler & faster instructions, but shifts burden of optimization to compiler
   - **Semantic Gap:** how closely instructions map to high-level language constructs  
-    *example:* instructions that work on matrix direcly lead to smaller semantic gap
+    *example:* instructions that work on matrix directly lead to smaller semantic gap
 - **Instruction Cycle:**
   - sequence of steps that instruction goes through to be executed
   - not all six steps are required for each instruction  
@@ -69,7 +69,7 @@
   - **Evaluate Address:** computes memory locations of operands
   - **Fetch Operands:** retreive operands from registers or memory
   - **Execute:** perform actual computation or logic
-  - **Store Result:** write outpuit to destination
+  - **Store Result:** write output to destination
 - **Micro-Architecture:**
   - hardware-specific implementation of ISA, which keeps improving while maintaining constant ISA interface  
     *example:* `add` instruction vs underlying adder implementation
@@ -167,7 +167,7 @@
     - **Conservative:** load stalled till all prior stores are resolved
     - **Speculative:** load executes immediately assuming no conflict  
       but if store calculates same address, pipeline later flushed
-  - **Store-to-Load Forwarding:** stores are buffered before committing to cache/memory, subsequent load can intercept data from store buffer direcly  
+  - **Store-to-Load Forwarding:** stores are buffered (for burst writes) before committing to cache/memory, subsequent load can intercept data from store buffer directly  
     *i.e.* data forwarding/bypassing of memory
 
 ## Superscalar Execution
@@ -206,6 +206,7 @@
   - **Vertical Accumulation:** multiplication results added to incoming partial sums from above, then passed downward
     *i.e.* `new_partial_sum = (input_data * fixed_weight) + partial_sum_from_above`
   - ![](./Media/Systolic_Array_TPU.png)
+  - todo: use a different GIF like from [this](https://www.youtube.com/watch?v=tMYC0ykA82A)
 
 ## Decoupled Access Execute
 - **Decoupled Access Execute:**
@@ -255,18 +256,17 @@
         if (x > 1) { ... }
         ```
       - ![](./Media/Global_Branch_History_Predictor.png)
-- **Delayed Branching:**
-  - compiler inserts instructions executed regardless of branch direction immediately after control instruction
-  - ```cpp
-    // base
-    ADDI R1, R1, 1;
-    BEQ R2, R3, LABEL;
-    NOP; // delay slot
+- **Delayed Branching:** compiler inserts instructions executed regardless of branch direction immediately after control instruction
+  ```cpp
+  // base
+  ADDI R1, R1, 1;
+  BEQ R2, R3, LABEL;
+  NOP; // delay slot
 
-    // optimized
-    BEQ R2, R3, LABEL;
-    ADDI R1, R1, 1; // moved to delay slot
-    ```
+  // optimized
+  BEQ R2, R3, LABEL;
+  ADDI R1, R1, 1; // moved to delay slot
+  ```
 - **Loop Un-Rolling:**
   - replicate loop body multiple times to increase work done per iteration
   - reduces loop control logic and increases instruction-level parallelism (more independent instructions)  
