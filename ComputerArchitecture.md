@@ -9,6 +9,7 @@
 - [Decoupled Access Execute](#decoupled-access-execute)
 - [Fine-Grained Multithreading](#fine-grained-multithreading)
 - [Branch Prediction](#branch-prediction)
+- [Single Instruction Multiple Data](#single-instruction-multiple-data)
 - [Parallel Computing](#parallel-computing)
 - [Misc](#misc)
 - [Scratch](#scratch)
@@ -287,6 +288,37 @@
     CMOV !condition, b, 3;
     ```
 
+## Single Instruction Multiple Data
+- **Flynn's Taxonomy of Computers:**
+  - **SISD:** *example:* single core processor
+  - **SIMD:** *example:* array & vector processor
+  - **MISD:** *example:* systolic array processor
+  - **MIMD:** *example:* multi-core processor
+
+- **Regular Parallelism:** operations are performed on structured data (like array, matrix) with predictable access patterns  
+  *example:* matrix multiplication  
+  **Irregular Parallelism:** operations on unpredictable data structures (like graphs, sparse matrices)  
+  *example:* graph processings
+- **Data Parallelism:** same operation performed across different pieces of data  
+  SIMD hardware exploits regular data parallelism
+- **Time-Space Duality:**
+  - ![](./Media/SIMD_Time_Space_Duality.png)
+  - **Array Processor:** multiple data elements processed at the same time across different hardware units
+  - **Vector Processor:** multiple data elements processed in consecutive time steps using the same hardware unit via pipelining
+- **Vector Instructions ⇒ Deeper Pipelines:**
+  - no intra-vector dependencies
+  - no control flow within a vector
+  - fixed stride makes address calculation easy, and even enables prefetching
+- practically vector machine performance is limited by (sequential) scalar operations  
+  so a powerful vector machine needs a powerful scalar processor as well  
+  > if you were plowing a field, which would you rather use: two strong oxen or 1024 chickens?
+- **Masked Operations:** handle conditional branches by enabling/disabling operations on a per-lane basis  
+  todo: HVX example in performance.md
+- **Vector Stripmining:**  if num elements exceeds hardware vector length, then process it in vector length sized "strips"  
+  process remaining elements that don't fill a complete vector using scalar loop or masked operation
+- **Scatter/Gather Operations:** handle non-contiguous (& non-strided) memory patterns by using indirection to move data between memory and vector registers  
+  uses base address and index array (offsets) to generate the addresses
+
 ## Parallel Computing
 - **Parallel Computer:** collection of processing elements that cooperate to solve problems quickly
 - **Fast != Efficient:**
@@ -320,3 +352,21 @@
 
 ## Scratch
 - **Time Division Multiplexing:** method of sharing a single resource (like core, bus) by assigning each task a fixed non-overlapping time-slot for exclusive access
+- **loading/storing vectors from/to memory:** elements can be loaded in consecutive cycles if we can start the load of one element per cycle  
+if memory access takes more than 1 cycle: bank the memory and interleave the elements across banks  
+**memory banking:** memory is divided into banks that can be accessed independently, banks share address & data buses (to minimize cost)  
+can start and in parallel complete one bank access per cycle, so can sustain `N` parallel accesses if all `N` go to different banks  
+(./media/computer_architecture/memory_banking.png)
+- **vector memory system:**  
+(./media/computer_architecture/vector_memory_system.png)  
+we know `next address = previous address + stride`, we can sustain 1 element/cycle throughput if:
+  - stride is 1
+  - consecutive elements are interleaved across banks  
+  if consecutive elements are from the same bank then second element access can be started only after first element access is completed (after bank latency)
+  - number of banks is greater than or equal to bank latency  
+  starting from `0 + bank_latency` cycle we can get 1 element/cycle, ensures there are enough banks to overlap enough memory operations to cover memory latency
+- **stride with banking:** we can sustain 1 element/cycle throughput as long as stride & number of banks are co-primes (no common factors except 1) and there are enough banks to cover bank access latency
+- **matrix storage format:**  
+(./media/computer_architecture/row_column_major.png)
+  - **row major:** consecutive elements in a row are laid out consecutively in memory
+  - **column major:** consecutive elements in a column are laid out consecutively in memory
