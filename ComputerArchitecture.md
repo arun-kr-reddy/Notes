@@ -10,6 +10,7 @@
 - [Fine-Grained Multithreading](#fine-grained-multithreading)
 - [Branch Prediction](#branch-prediction)
 - [Single Instruction Multiple Data](#single-instruction-multiple-data)
+- [Graphics Processing Unit](#graphics-processing-unit)
 - [Parallel Computing](#parallel-computing)
 - [Misc](#misc)
 - [Scratch](#scratch)
@@ -318,6 +319,26 @@
   process remaining elements that don't fill a complete vector using scalar loop or masked operation
 - **Scatter/Gather Operations:** handle non-contiguous (& non-strided) memory patterns by using indirection to move data between memory and vector registers  
   uses base address and index array (offsets) to generate the addresses
+
+## Graphics Processing Unit
+- **Single Program Multiple Data (SPMD):**
+  - multiple threads (processing elements) execute the same program (kernel) but on different pieces of data
+  - threads in same block can synchronize at certain points in program using barriers
+  - **Warp/Wavefront:** dynamic grouping of threads that execute same instruction (*i.e.* SIMT)  
+    *i.e.* dynamic SIMD formed by hardware which is not exposed to the programmer
+- **FGMT of Warps:** switches between different warps every clock cycle to hide latencies (like cache miss, data load)  
+  ![](./Media/GPU_Warp_FGMT.png)
+- **SIMD utilization:** fraction of SIMD lanes executing a useful
+operation
+- **Warp Control Flow Problem:**
+  - threads within a warp can take different control flow paths but they need to have a common `PC`
+  - executing both paths for all warps reduces SIMD utilization (lanes executing useful operation)
+  - ![](./Media/GPU_Branch_Divergence.png)
+- **Dynamic Warp Formation/Merging:**
+  - find individual (waiting) threads that are at the same `PC` and dynamically group them together into a single warp
+  - ![](./Media/GPU_Warp_Merging.png)
+- ***Example:* Dynamic Warp Formation:**  
+  ![](./Media/GPU_Warp_Merging_Example.png)
 
 ## Parallel Computing
 - **Parallel Computer:** collection of processing elements that cooperate to solve problems quickly
