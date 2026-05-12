@@ -37,12 +37,8 @@
   - **Amdahl's Law:**
     - parallel processing performance gain is limited by part of program that must run serially
     - *example:* if 10% of program is serial, then maximum gain (`N = inf`) is 10x
-    - `speedup = time_original / time_new`  
-      assume `time_original` is 100%, *i.e.* 1  
-      time_new is made up of serial & parallel part  
-      serial part unchanged `(100% - P)`, *i.e.* `(1 - P)`  
-      parallel part split across `N` processors, so `P/N`  
-      ![](./Media/Amdahl's%20Law.png)
+    - $$S = \frac{1}{(1 - P) + \frac{P}{N}}$$  
+      `(100% - P)` is unchanged serial part, `P/N` is parallel part split across `N` processors
 
 ## `std::simd`
 - **`std::simd<T>`:**

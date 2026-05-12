@@ -11,6 +11,10 @@
 - [Branch Prediction](#branch-prediction)
 - [Single Instruction Multiple Data](#single-instruction-multiple-data)
 - [Graphics Processing Unit](#graphics-processing-unit)
+- [Memory](#memory)
+  - [Cache](#cache)
+  - [multi core caches](#multi-core-caches)
+- [prefetching](#prefetching)
 - [Parallel Computing](#parallel-computing)
 - [Misc](#misc)
 - [Scratch](#scratch)
@@ -339,6 +343,270 @@ operation
   - ![](./Media/GPU_Warp_Merging.png)
 - ***Example:* Dynamic Warp Formation:**  
   ![](./Media/GPU_Warp_Merging_Example.png)
+
+## Memory
+- **Memory Interleaving/Banking:**
+  - divide large monolithic memory array into smaller arrays that can operate independently
+  - *example:* DRAM interleaved into channel → rank → bank  
+    if each bank gives 1bit per cycle, total throughput is `num_banks x num_ranks x num_channels`  
+    ![](./Media/DRAM_Organization.png)
+- 
+  | ideal memory             | practical memory                   | comment                                  |
+  | ------------------------ | ---------------------------------- | ---------------------------------------- |
+  | zero access time latency | faster is more expensive           | SRAM vs DRAM                             |
+  | infinite capacity        | bigger is slower                   | longer to determine the location         |
+  | zero cost                |                                    |                                          |
+  | infinite bandwidth       | higher bandwidth is more expensive | more banks, more ports, higher frequency |
+- **Memory Hierarchy:**
+  - tiered organization of memory types where speed and cost are balanced against capacity
+  - fundamental tradeoff is small (costly) fast memory vs (slow) large slow memory
+  - ensures that frequently used data is kept in high-speed levels
+  - ![](./Media/Memory_Hierarchy.png)
+
+### Cache
+- **Locality of Reference:** 
+  - tendency of a program to access same set of memory locations repetitively over a short period of time
+  - **Temporal:** re-use of specific data within a relatively small time duration  
+    *example:* variable in a loop
+  - **Spatial:** use of data elements within relatively close storage locations  
+    *example:* array traversal
+  - temporal is locality in time, while spatial is locality in space
+- **Cache:** small high-speed memory buffer that stores copies of data from frequently used main memory locations
+- **Cache Management:**
+  - **Automatic:** hardware handles data movement across levels  
+    *example:* processor L1/L2/L3 caches
+  - **Manual:** programmer controlled buffers  
+    *example:* on-chip scratchpad memory
+- **Cache Line/Block:** smallest unit of data that can be transferred between main memory & cache
+- **Hit:** requested data found in cache (typically L1)  
+  **Miss:** fetch cache line from lower level (L2, L3, RAM), leads to miss penalty stall cycles
+- **Cache Hit Rate:** `(num_hits) / (num_hits + num_misses) = (num_hits) / (num_accesses)`  
+  **Average Memory Access Time:** `(hit_rate x hit_latency) + (miss_rate x miss_latency)`
+- **cache design decisions:**
+  - **placement:** where and how to place/find a block
+  - **replacement:** what data to remove to make room
+  - **granularity of management:** large or small blocks, maybe sub-blocks
+  - **write policy:** what do we do about writes
+  - **instruction/data:** do we treat them separately
+- when address arrives to cache for read, in parallel address sent to:  
+**tag store:** check if the address is present in the cache and returns hit/miss, also has some bookkeeping information for replacement/eviction  
+**data store:** stores memory blocks, returns memory, discard data if tag store returns miss  
+[](./media/computer_architecture/cache_tag_data_store.png)  
+- **cache addressing:** main memory is logically divided into fixed-size chunks (blocks)  
+cache can only house limited number of blocks so each block address maps to a potential location in the cache determined by the index bits in the address, these are used to index into the tag & data stores  
+[](./media/computer_architecture/cache_index_bits.png)  
+- **cache access:**  
+[](./media/computer_architecture/cache_access.png)
+  - index into the tag and data stores with index bits in address
+  - check valid bit in tag store and compare tag bits in address with stored tag in tag store
+  - if the stored tag is valid and matches the tag of the block then it is a cache hit
+  - block in data store valid, get the required word from block using mux
+- **cache mapping:** how a certain block that is present in the main memory gets mapped to the memory of a cache in the case of any cache miss  
+**associativity:** how many blocks can map to the same index, blocks that map to the same index are called set  
+[](./media/computer_architecture/cache_associativity.png)
+  - **direct mapped:** a given main memory block can be placed in only one possible cache location  
+  if the location is previously taken up then the new block is loaded after evicting old block, so two blocks that map to the same index cannot be present in the cache at the same time so can cause conflict misses  
+  example: can lead to 0% hit rate if same block accessed in interleaved manner
+  - **fully associative:** a block can be placed in any cache location, don't have conflict misses instead has capacity misses
+  - **k-way set associative:** a given main memory block can be placed in any of the `k` cache locations (`k`-way associative)  
+  trade-off between direct-mapped cache (less complex) and fully associative cache (fewer misses)  
+  direct mapped is an extreme case with `k==1`  
+  diminishing returns for higher associativity as it will lead to higher hit rate but also slower cache access time (longer tag search) and more expensive hardware (more comparators)
+- think of each block in set having a priority indicating how important it to keep the block in the cache then there are three key decisions within a set to determine/adjust block priorities:
+  - **insertion:** what happens to priorities when a block is inserted into the set (cache fill)
+  - **promotion:** what happens to priorities on a cache hit
+  - **eviction/replacement:** what happens to priorities on a cache miss
+- **working set:** whole set of data the executing application references within a time interval
+- **eviction/replacement policy:** on a cache miss replace any invalid block first, if all blocks are valid then consult replacement policy
+  - **first-in first-out (FIFO):** evict blocks in the order they were added
+  - **least-recently used (LRU):** evict the least recently accessed block  
+  so need to keep track of access ordering of blocks, but for a 4-way cache there are `4! == 24` possible orderings so we need 5 bits per set  
+  so most modern processors don't implement true/perfect LRU in highly associative caches, instead:
+    - **not most-recently used (nMRU):** keep track of only MRU, for replacement randomly choose one of the not-MRU blocks
+    - **hierarchical LRU:** divide the k-way set into `m` groups and keep track of only the MRU group and MRU block within each group  
+    on replacement select victim randomly from one of the not-MRU block in one of the not-MRU groups
+    - **victim next-victim replacement:** only keep track of victim (MRU) and the next-victim (next MRU)
+  - **random:** is better when set thrashing (program working set is larger than set associativity) occurs  
+  example: 0% hit-rate with LRU for cyclic reference to A, B, C, D, E in a 4-way cache
+  - **least-frequently used (LFU):** algorithm counts how often a block is needed, those used less often are discarded first
+  - **least costly to re-fetch:** different memory accesses have different cost (latency) associated with it (L2 cache vs DRAM), those with lowest latencies are evicted first
+  - **hybrid replacement policies:** in practice  performance of replacement policy depends on the workload (like LRU vs random for thrashing), so instead use a hybrid to get the best of both worlds
+  - **Belady's optimal replacement policy:** replace the block that is going to be referenced furthest in the future by the program, cannot be implemented since this requires knowledge of the future
+- when do we write the modified data in a cache to the next level:
+  - **write-back:** when the block is evicted  
+  can combine multiple writes to the same block before eviction saving bandwidth and energy  
+  most modern caches use this  
+  - **write-through:** at the time the write happens  
+  simpler and makes sure all levels are up to date (cache-coherent) but bandwidth intensive (multiple writes)  
+  useful when multiple processors share memory
+- **dirty/modified bit:** is part of tag-store entry to indicate that data has been written (to cache) but memory has not been updated, required for write-back caches
+- do we allocate a cache block on a write miss:
+  - **allocate on write miss:** can combine writes instead of writing each of them individually to next level  
+  simpler because write misses can be treated the same way as read misses  
+  but requires transfer of the whole cache block, example: entire 64byte cache block needs to be written for a 1byte modification
+  - **no-allocate:** conserves cache space if locality of writes is low (potentially improving cache read hit rate)
+- **streaming writes:** processor writes to an entire block over a small amount of time (like `memset()`), allocating on streaming writes is not preferable here since it can pollute the cache with unnecessary data
+- instead write to only a portion of the block (sub-block) to get the best of allocate on write miss & no-allocate  
+**sub-blocked (sectored) caches:** divide a block into sub-blocks (sectors) each having a separate valid & dirty bits  
+allocate only a sub-block (or a subset of sub-blocks) on a request  
+no need to transfer the entire cache block from cache, a write simply validates and updates a sub-block  
+more freedom in transferring sub-blocks into the cache, a cache block does not need to be in the cache fully  
+but increased complexity and may not fully exploit spatial locality  
+[](./media/computer_architecture/cache_sub_blocks.png)
+- **instruction & data caches:**
+  - **unified:** dynamic sharing of cache space (no static partitioning), but instructions & data can kick each other out (no guaranteed space for either)
+  - **separate:** instruction and data are accessed in different places in the pipeline so first level caches are almost always split and higher level caches are almost always unified
+- **multi-level caching in a pipelined design:**
+  - **first level caches:** separate instruction and data caches, decisions very much affected by cycle time, small & lower associativity cache (latency is critical), tag store and data store accessed in parallel
+  - **second level caches:** decisions need to balance hit rate and access latency, usually large and highly associative (latency not as important), tag store and data store accessed serially (to save energy since miss rate is higher)  
+   second level doesn't see the same accesses as the first so first level acts as a filter (filtering some temporal and spatial locality)
+- **cache inclusion policy:**
+  - **inclusive:** a block in an lower level is always also included in higher levels to simplify cache coherence
+  - **exclusive:** a block in an lower level will not be included in higher levels to better utilize space across entire hierarchy
+  - **non-inclusive:** a block in an lower level may or may not be included in higher levels, relaxes design decisions
+- **cache performance:** depends on:
+  - **cache size:** total data (not including tag) capacity, bigger can exploit temporal locality better but too large of a cache can adversely affect latency (bigger is slower)  
+  [](./media/computer_architecture/cache_performance_cache_size.png)
+  - **block size:** data that is associated with an address tag  
+  too small blocks don't exploit spatial locality well and have larger tag overhead  
+  too large blocks will lead to less total number of blocks so less temporal locality exploitation and waste of cache space (& bandwidth/energy) if spatial locality is not high  
+  [](./media/computer_architecture/cache_performance_block_size.png)
+    - **critical word first:** large cache blocks can take a long time to fill into the cache, so fetch critical word first into the cache line and supply it to the processor then fill the cache line
+    - **sub-blocking:** sub-blocks to help with higher bandwidth wastage for large cache blocks
+  - **associativity:** larger associativity lowers miss rate (reduced conflicts) but higher hit latency & area cost, but diminishing returns on miss rate  
+  smaller associativity lowers cost & hit latency (important for L1 caches)  
+  [](./media/computer_architecture/cache_performance_associativity.png)
+- **cache miss classification:**
+  - **compulsory:** first reference to an address (block) always results in a miss, prefetching can reduce misses by anticipating which blocks will be needed soon
+  - **capacity:** cache is too small to hold everything needed  
+  defined as the misses that would occur even with a fully-associative cache (with optimal replacement) of the same capacity
+  - **conflict:** any miss that is neither a compulsory nor a capacity miss, increasing associativity can help reduce these misses
+- **restructuring data access patterns:** software approaches for higher hit rate
+  - **loop interchange:** exchanging the order of two iteration variables used by a nested loop to ensure that the data is accessed in the order in which they are present in memory  
+  example: for a row major layout accessing consecutive elements help with spatial locality
+    ```cpp
+    // original
+    for (int x = 0, x < width; x++)
+        for (int y = 0, y < height; y++)
+            sum += input[x * width + y];
+
+    // improved
+    for (int y = 0, y < height; y++)
+        for (int x = 0, x < width; x++)
+            sum += input[x * width + y];
+    ```
+  - **tiling:** divide the working set so that each piece fits in the cache, avoids cache conflicts between different chunks of computation  
+  basically operate on smaller data (tiles) that fit fast memories (cache or shared memory)  
+  example: in image convolution same memory locations access by neighboring threads, so divide the input into tiles that can be loaded in shared memory  
+  [](./media/computer_architecture/tiling.png)
+  - **improved data packing:** separate rarely-accessed fields of a data structure and pack them into a separate data structure  
+  example: in a linked-list, rarely accessed data occupy most of the cache line
+    ```cpp
+    // original
+    typedef struct
+    {
+        // frequently accessed
+        node_t *next;
+        int key;
+        // rarely accessed
+        char[256] name;
+        char[256] school;
+    } node_t;
+
+    while (node)
+    {
+        if (node->key == input_key)
+        {
+            // access other fields of node
+        }
+        node = node->next;
+    }
+
+    // improved
+    typedef struct
+    {
+        // frequently accessed
+        node_t *next;
+        int key;
+        // rarely accessed
+        node_data_t *node_data;
+    } node_t;
+
+    typedef struct
+    {
+        char[256] name;
+        char[256] school;
+    } node_data_t;
+
+    while (node)
+    {
+        if (node->key == input - key)
+        {
+            // access node->node_data
+        }
+        node = node->next;
+    }
+    ```
+- **memory level parallelism:** generating & servicing multiple memory accesses in parallel  
+eliminating an isolated miss helps performance more than eliminating a parallel miss  
+eliminating a higher-latency miss could help performance more than eliminating a lower-latency miss
+[](./media/computer_architecture/memory_level_parallelism.png)  
+[](./media/computer_architecture/memory_level_parallelism_example.png)
+
+### multi core caches
+- cache efficiency becomes even more important in a multi-core/threaded systems since memory bandwidth is at premium & cache space is a limited resource across cores/threads
+- **private cache:** cache belongs to one core, a shared data blocks needs to be brought into respective caches (redundant transfer)  
+**shared cache:** cache is shared by multiple cores  
+improves utilization since a idle resource can be used by another thread  
+no fragmentation due to static partitioning  
+easier to maintain coherence  
+reduces communication latency by storing shared data in same cache  
+easier to maintain coherence between cores  
+but can lead to contention for resources between threads leading to performance degradation  
+inconsistent performance across runs since performance depends on co-executing threads  
+slower access since cache not tightly coupled with the core  
+[](./media/computer_architecture/cache_shared_vs_private.png)
+- **cache coherence:** refers to the consistency and synchronization of data stored in different caches within a multi-core system  
+**simple coherence implementation:** all caches will observe each other's write/read operations, if a processor writes to a block then others will invalidate that block in their respective caches
+- **false sharing:** when a core attempts to periodically access data that is not being altered but it shares a cache block with data that is being altered then caching protocol may force the first participant to reload the whole cache block despite a lack of logical necessity  
+example: if two variables share a cache line then unmodified variable read will be as expensive as modified variable read if there's an intervening write to the other variable since cache line needs to be invalidated then fetched from main memory again  
+  - mainly a issue for multi-core/multi-processor systems
+  - can lead to cache thrashing, *e.g.* two core interleaved access vairables on same cache line
+
+## prefetching
+- **prefetching:** fetch the data before it is needed by the program  
+if data can be prefetched accurately & early enough then (high) memory latency can be reduced/eliminated  
+can eliminate compulsory cache misses (only option other than very large cache blocks)  
+prefetching involves predicting which address will be needed in the future, mis-predicted data is simply not used so no need for state recovery like branch prediction but can lead to side channels like meltdown & spectre
+- **example: HW prefetcher in memory system:**  
+[](./media/computer_architecture/prefetch_memory_system.png)
+- **prefetching challenges:**
+  - **what:** prefetching useless data wastes resources (memory bandwidth, cache/prefetch buffer space, energy consumption) so accurate prediction of addresses is important  
+  predict based on past access pattern in HW or compiler's/programmer's knowledge of data structures SW
+  - **when:** if data prefetched too early then it might not be used before it is evicted  
+  if prefetched too late it might not hide the entire memory latency
+  in HW prefetcher try to stay far ahead of the processor's demand access stream  
+  in SW move the prefetch instructions earlier in the code
+  - **where:** prefetcher will see different access patterns based on where it is placed  
+  example: at L1 it sees all L1 hits & misses, at L2 level it only sees L1 misses and at L3 level it only sees L2 misses  
+  so having the prefetcher closer to processor leads to better accuracy & coverage but prefetcher needs to examine more requests
+  - **how:** how & who does the prefetching
+    - **software:** programmer/compiler insert ISA provided prefetch instructions (extra effort), usually works well for regular access patterns
+    - **hardware:** specialized hardware monitors memory accesses (auto address generation)  
+    memorizes, finds & learns address strides, patterns & correlation
+    - **execution-based:** a special thread execute to prefetch data for the main program, can be generated by either SW/programmer or HW
+- **example: IBM POWER4 streaming prefetcher:** when load instruction miss sequential cache lines (ascending or descending) the prefetch engine initiates access to the following cache lines before being referenced by load instructions  
+[](./media/computer_architecture/streaming_prefetcher.png)
+- **stride prefetcher:** record the stride between consecutive memory accesses, if stable use it to predict future memory accesses  
+stride can be determined on a per-instruction (hash `PC`) basis or per-memory-region (hash cache block) basis  
+stream prefetching is a special case of  per-memory-region prefetching with stride 1
+memory-region based stride prefetching where N = 1
+- **prefetcher performance:**
+  - **accuracy:** `used_prefetches / sent_prefetches`
+  - **coverage:** `prefetched_misses / all_prefetches`
+  - **timeliness:** `on_time_prefetches / used_prefetches`
+  - **bandwidth consumption:** bandwidth consumed with/without prefetcher, can utilize idle bus bandwidth if available
+  - **cache pollution:** extra load demand misses due to prefetch placement in cache
 
 ## Parallel Computing
 - **Parallel Computer:** collection of processing elements that cooperate to solve problems quickly
