@@ -1,5 +1,8 @@
 # Notes
 
+## Performance
+- [SIMD](./Performance/SIMD.md)
+
 ## Tools
 - [Git](./Tools/Git.md)
 - [Mermaid](./Tools/Mermaid.md)
@@ -7,6 +10,6 @@
 
 ## Symbols
 - ㅤ
-  |                 |     |
-  | --------------- | --- |
-  | Invisible Arrow | `ㅤ`  |
+  |                 |      |
+  | --------------- | ---- |
+  | Invisible Arrow | `ㅤ` |
