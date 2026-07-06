@@ -32,12 +32,13 @@
       SA -- restore --> WD
   ```
 - ㅤ
-  |                                                 |                            |
-  | ----------------------------------------------- | -------------------------- |
-  | `git init`                                      | create local repo          |
-  | `git clone <url>`                               | clone existing remote repo |
-  | `git clone --branch <branch> <url>`             | clone then switch branch   |
-  | `git config --global core.editor "code --wait"` | set `code` as git editor   |
+  |                                                 |                                         |
+  | ----------------------------------------------- | --------------------------------------- |
+  | `git init`                                      | create local repo                       |
+  | `git clone <url>`                               | clone existing remote repo              |
+  | `git clone --branch <branch> <url>`             | clone then switch branch                |
+  | `git config --global core.editor "code --wait"` | set `code` as git editor                |
+  | `git -C <path>`                                 | run git command in a specific directory |
 
 ## Basic Workflow
 - ㅤ
