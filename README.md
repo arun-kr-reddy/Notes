@@ -3,6 +3,9 @@
 ## Performance
 - [SIMD](./Performance/SIMD.md)
 
+## Personal
+- [Taxation](./Personal/Taxation.md)
+
 ## Tools
 - [Git](./Tools/Git.md)
 - [Mermaid](./Tools/Mermaid.md)
