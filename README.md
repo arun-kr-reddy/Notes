@@ -4,6 +4,8 @@
 - [SIMD](./Performance/SIMD.md)
 
 ## Personal
+- [Career](./Personal/Career.md)
+- [Finance](./Personal/Finance.md)
 - [Taxation](./Personal/Taxation.md)
 
 ## Tools
@@ -13,6 +15,9 @@
 
 ## Symbols
 - ㅤ
-  |                 |      |
-  | --------------- | ---- |
-  | Invisible Arrow | `ㅤ` |
+  |                     |           |
+  | ------------------- | --------- |
+  | invisible character | `ㅤ`      |
+  | arrows              | ← ↑ → ↓ ↔ |
+  | implies             | ⇒         |
+  | proportional        | ∝         |

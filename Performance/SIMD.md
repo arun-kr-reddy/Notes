@@ -1,9 +1,6 @@
 # SIMD
 - [Algorithmic Patterns](#algorithmic-patterns)
 
-## Links <!-- omit from toc -->
-
-
 ## Algorithmic Patterns
 - **Tree Fold:**
   - condense array of vector registers to a single vector register (vertical reduction)

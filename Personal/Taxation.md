@@ -1,7 +1,15 @@
 # Taxation
 - [Abbreviations](#abbreviations)
 - [Pre-Requisites](#pre-requisites)
-- [Schedules](#schedules)
+- [Reconcile International](#reconcile-international)
+- [Tax Credit](#tax-credit)
+- [Schedule Salary](#schedule-salary)
+- [Schedule Capital Gains](#schedule-capital-gains)
+- [Schedule Other Sources](#schedule-other-sources)
+- [Schedule Special Income](#schedule-special-income)
+- [Schedule Foreign Source of Income](#schedule-foreign-source-of-income)
+- [Schedule Tax Relief](#schedule-tax-relief)
+- [Schedule Foreign Assets](#schedule-foreign-assets)
 
 ## Links <!-- omit from toc -->
 - [US Stocks Taxation in India](https://www.youtube.com/watch?v=NO6OlUI1Hz4)
@@ -35,7 +43,7 @@
   - [ETrade Monthly Statements](https://us.etrade.com/etx/pxy/accountdocs?inav=nav:documents#/documents) for CY+FY
   - **note:** Form 1042S is for CY, only downloades as extra proof
 
-### Reconcile International
+## Reconcile International
 - create CY+FY ledger mapping all stock vesting to sales
   - FY will be used for schedule CG
   - CY will be used for schedule FA sale proceeds
@@ -49,7 +57,7 @@
   ![](./Media/ETrade%20Monthly%20Statement.png)
 - use previous month's last day's [SBI `TT BUY` rate](https://github.com/sahilgupta/sbi-fx-ratekeeper/blob/main/csv_files/SBI_REFERENCE_RATES_USD.csv) for USD -> INR conversion
 
-### Tax Credit
+## Tax Credit
 - `e-File` -> `Income Tax Forms` -> `File Income Tax Forms` -> `Double Taxation Relief (Form 67)`
 - ㅤ
   |                               |                         |
@@ -65,13 +73,11 @@
   | tax rate as per DTAA          | 25 (per country)        |
   | amount                        | = tax paid              |
 
-## Schedules
-
-### Salary
+## Schedule Salary
 - Verify Salary & Tax Deducted from Form 16B
 - Verify Base Salary & ESOPs split from March Tax Computation Sheet
 
-### Capital Gains
+## Schedule Capital Gains
 - **Long Term Holding Period:**
   |                           |                          |
   | ------------------------- | ------------------------ |
@@ -87,16 +93,16 @@
 - **note:** extra advance tax interest levied if quarterly breakup not filled
 - **note:** always check net gain, usually higher than net outflow due to STT deductions
 
-### Other Sources
+## Schedule Other Sources
 - interest income is auto-filled, verify against AIS
 - fill all dividends (domestic + international) in `1.`, and its quarterly breakup in `10.`
 - **note:** extra advance tax interest levied if quarterly breakup not filled
 
-### Special Income
+## Schedule Special Income
 - verify entries with special tax rates
 - short term debt & short term international not listed since taxed at slab rate
 
-### Foreign Source of Income
+## Schedule Foreign Source of Income
 - ㅤ
   |                           |                        |
   | ------------------------- | ---------------------- |
@@ -109,10 +115,10 @@
   | dividend tax payable      | 30% of dividend income |
   | DTAA article number       | 10 (per country)       |
 
-### Tax Relief
+## Schedule Tax Relief
 - verify withholden dividend tax
 - use `90` section for TDAA countries, `No` for if tax credited by foreign tax authority
 
-### Foreign Assets
+## Schedule Foreign Assets
 - **Custodial Accounts (`A2`):** add cash details from ETrade & IKBR in separate rows
 - **Equity (`A3`):** add equity/debt details from ETrade & IKBR, one ticker per row
