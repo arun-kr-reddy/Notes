@@ -1,0 +1,124 @@
+# Taxation
+- [Abbreviations](#abbreviations)
+- [Pre-Requisites](#pre-requisites)
+- [Reconcile International](#reconcile-international)
+- [Tax Credit](#tax-credit)
+- [Schedule Salary](#schedule-salary)
+- [Schedule Capital Gains](#schedule-capital-gains)
+- [Schedule Other Sources](#schedule-other-sources)
+- [Schedule Special Income](#schedule-special-income)
+- [Schedule Foreign Source of Income](#schedule-foreign-source-of-income)
+- [Schedule Tax Relief](#schedule-tax-relief)
+- [Schedule Foreign Assets](#schedule-foreign-assets)
+
+## Links <!-- omit from toc -->
+- [US Stocks Taxation in India](https://www.youtube.com/watch?v=NO6OlUI1Hz4)
+
+## Abbreviations
+- ㅤ
+  |       |                                               |
+  | ----- | --------------------------------------------- |
+  | CY    | Calendar Year                                 |
+  | FY    | Financial Year                                |
+  | CG    | Capital Gains                                 |
+  | FA    | Foreign Assets                                |
+  | OS    | Income from Other Sources                     |
+  | CY+FY | 15 month merged CY + FY (`Jan 1` to `Mar 31`) |
+  | FMV   | Fair Market Value (is already taxed)          |
+
+## Pre-Requisites
+- **Income Tax Department:**
+  - Annual Information Statement (AIS)
+  - Taxpayer Information Summary (TIS)
+- **Workplace:**
+  - Form 16 (A & B)
+  - Form 12BA
+  - Tax Computation Sheet for March
+- **Domestic Capital Gains:**
+  - MFCentral FY Consolidated Capital Gains Statement
+- **International Capital Gains:**
+  - [IKBR Activity Statement](https://www.interactivebrokers.co.in/AccountManagement/AmAuthentication?action=RM_STATEMENTS) for CY+FY
+  - [IKBR Trade Confirmations](https://www.interactivebrokers.co.in/AccountManagement/AmAuthentication?action=RM_STATEMENTS) for CY+FY
+  - [ETrade Gain/Loss Report](https://us.etrade.com/etx/sp/stockplan#/myAccount/gainsLosses) for CY+FY
+  - [ETrade Monthly Statements](https://us.etrade.com/etx/pxy/accountdocs?inav=nav:documents#/documents) for CY+FY
+  - **NOTE:** Form 1042S is for CY, only downloaded as extra proof
+
+## Reconcile International
+- create CY+FY ledger mapping all stock vesting to sales
+  - FY will be used for schedule CG
+  - CY will be used for schedule FA sale proceeds
+  - **NOTE:** ensure Gain/Loss report is showing FMV as buy price
+- additionally use monthly statements for:
+  - **Schedule FA:**
+    - get unsold shares on 31st Dec for closing value
+    - calculate peak holding value during CY
+  - **Schedule OS:** log different dividends received (& tax withholdings) during FY along with date
+  - search for these keywords in ETrade monthly reports: `Cash, BDP, MMFs`, `Stocks`, `Qualified Dividends`, `Tax Withholdings`  
+  ![](../_Media/ETrade_Monthly_Statement.png)
+- use previous month's last day's [SBI TT BUY rate](https://github.com/sahilgupta/sbi-fx-ratekeeper/blob/main/csv_files/SBI_REFERENCE_RATES_USD.csv) for USD → INR conversion
+
+## Tax Credit
+- `e-File` → `Income Tax Forms` → `File Income Tax Forms` → `Double Taxation Relief (Form 67)`
+- ㅤ
+  |                               |                         |
+  | ----------------------------- | ----------------------- |
+  | Country                       | US                      |
+  | Source of Income              | dividend                |
+  | Amount                        | from monthly sheet      |
+  | Tax Paid                      | from monthly sheet      |
+  | Tax Paid %                    | 25%                     |
+  | Tax Payable Normal Provisions | 30% of amount           |
+  | Tax Payable 115JB/JC          | 0 (business deductions) |
+  | Article Number                | 10 (per country)        |
+  | Tax Rate as per DTAA          | 25 (per country)        |
+  | Amount                        | = tax paid              |
+
+## Schedule Salary
+- Verify Salary & Tax Deducted from Form 16B
+- Verify Base Salary & ESOPs split from March Tax Computation Sheet
+
+## Schedule Capital Gains
+- **Long Term Holding Period:**
+  |                           |                          |
+  | ------------------------- | ------------------------ |
+  | Domestic Equity           | > 1 year                 |
+  | Domestic Debt             | never, always short term |
+  | International Debt/Equity | > 2 years                |
+- **Short Term CG:**
+  - **`2.`:** domestic equity
+  - **`5.`:** combined domestic debt + international
+- **Long Term CG:**
+  - **`3.`:** domestic equity
+  - **`8.`:** international
+- **NOTE:** extra advance tax interest levied if quarterly breakup not filled
+- **NOTE:** always check net gain, usually higher than net outflow due to STT deductions
+
+## Schedule Other Sources
+- interest income is auto-filled, verify against AIS
+- fill all dividends (domestic + international) in `1.`, and its quarterly breakup in `10.`
+- **NOTE:** extra advance tax interest levied if quarterly breakup not filled
+
+## Schedule Special Income
+- verify entries with special tax rates
+- short term debt & short term international not listed since taxed at slab rate
+
+## Schedule Foreign Source of Income
+- ㅤ
+  |                           |                        |
+  | ------------------------- | ---------------------- |
+  | Country                   | US                     |
+  | Capital Gains Income      | from monthly sheet     |
+  | Capital Gains Tax Paid    | 0                      |
+  | Capital Gains Tax Payable | 30% of CG income       |
+  | Dividend Income           | from monthly sheet     |
+  | Dividend Tax paid         | from monthly sheet     |
+  | Dividend Tax payable      | 30% of dividend income |
+  | DTAA Article Number       | 10 (per country)       |
+
+## Schedule Tax Relief
+- verify withholden dividend tax
+- use `90` section for TDAA countries, `No` for if tax credited by foreign tax authority
+
+## Schedule Foreign Assets
+- **Custodial Accounts (`A2`):** add cash details from ETrade & IKBR in separate rows
+- **Equity (`A3`):** add equity/debt details from ETrade & IKBR, one ticker per row
