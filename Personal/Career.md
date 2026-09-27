@@ -14,9 +14,14 @@
   - manually trace two sample inputs (1 normal + 1 edge case) on paper
   - state (dont implement) brute force solution along with time & space complexity
   - identify bottlenecks (repeated work) and try to optimize them
-  - if cannot make any headway use hint after 15 mins & solution after 20 mins
-  - but code it yourself & mark it for review
-- retry marked problems (+ 1 new similar problem) on the 1st and 3rd weekends
+  - if cannot make any headway use hint after `X` mins & solution after `Y` mins, but code it yourself & mark it for review
+    |        | `X` | `Y` |
+    | ------ | --- | --- |
+    | Easy   | 15  | 20  |
+    | Medium | 20  | 35  |
+    | Hard   | 30  | 50  |
+  - dry run code through edge-cases before submit (no compilers in real interviews)
+- retry marked problems on the 1st and 3rd weekends
 - **Short Notes:** core pattern (or new trick), intuition behind problem, edge cases, failure trigger (why initial thinking stalled or produced buggy versions), time & space complexity
 - intial prep takes multiple months, but future refreshes will only take weeks
 

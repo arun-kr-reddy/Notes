@@ -23,24 +23,24 @@
 
 ## NeetCode 150
 - ㅤ
-  | Week | Topic                               | Total |
-  | ---- | ----------------------------------- | ----- |
-  | 1    | Arrays & Hashing + Bit Manipulation | 9+4   |
-  | 2    | Two Pointers + Stack                | 5+6   |
-  | 3    | Sliding Window + Binary Search      | 6+7   |
-  | 4    | Linked List + Bit Manipulation      | 11+3  |
-  | 5    | Trees                               | 8     |
-  | 6    | Trees + Tries                       | 7+3   |
-  | 7    | Backtracking                        | 10    |
-  | 8    | Heap + Intervals                    | 7+6   |
-  | 9    | Greedy + Maths                      | 8+4   |
-  | 10   | Graphs                              | 7     |
-  | 11   | Graphs + Maths                      | 6+4   |
-  | 12   | Advanced Graphs                     | 6     |
-  | 13   | 1-D DP                              | 6     |
-  | 14   | 1-D DP                              | 6     |
-  | 15   | 2-D DP                              | 6     |
-  | 16   | 2-D DP                              | 5     |
+  | Week | Topics                          | #     |
+  | ---- | ------------------------------- | ----- |
+  | 1    | Arrays & Hashing + Two Pointers | 9+5   |
+  | 2    | Sliding Window + Stack          | 6+6   |
+  | 3    | Binary Search + Linked List     | 7+7   |
+  | 4    | Linked List + Trees             | 4+5   |
+  | 5    | Trees                           | 10    |
+  | 6    | Tries + Heap + Backtracking     | 3+7+3 |
+  | 7    | Backtracking                    | 7     |
+  | 8    | Graphs + Bit Manip              | 7+4   |
+  | 9    | Graphs + Bit Manip              | 6+3   |
+  | 10   | Intervals + Greedy              | 6+5   |
+  | 11   | Greedy + Math                   | 3+8   |
+  | 12   | Adv Graphs                      | 6     |
+  | 13   | 1-D DP                          | 6     |
+  | 14   | 1-D DP                          | 6     |
+  | 15   | 2-D DP                          | 6     |
+  | 16   | 2-D DP                          | 5     |
 
 ## Domain Specific
 - LeetGPU for practice
