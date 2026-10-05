@@ -23,24 +23,20 @@
 
 ## NeetCode 150
 - ㅤ
-  | Week | Topics                          | #     |
-  | ---- | ------------------------------- | ----- |
-  | 1    | Arrays & Hashing + Two Pointers | 9+5   |
-  | 2    | Sliding Window + Stack          | 6+6   |
-  | 3    | Binary Search + Linked List     | 7+7   |
-  | 4    | Linked List + Trees             | 4+5   |
-  | 5    | Trees                           | 10    |
-  | 6    | Tries + Heap + Backtracking     | 3+7+3 |
-  | 7    | Backtracking                    | 7     |
-  | 8    | Graphs + Bit Manip              | 7+4   |
-  | 9    | Graphs + Bit Manip              | 6+3   |
-  | 10   | Intervals + Greedy              | 6+5   |
-  | 11   | Greedy + Math                   | 3+8   |
-  | 12   | Adv Graphs                      | 6     |
-  | 13   | 1-D DP                          | 6     |
-  | 14   | 1-D DP                          | 6     |
-  | 15   | 2-D DP                          | 6     |
-  | 16   | 2-D DP                          | 5     |
+  | Week     | Topic                                      | #      |
+  | -------- | ------------------------------------------ | ------ |
+  | 1        | Arrays & Hashing                           | 9      |
+  | 2        | Two Pointers, Stack                        | 5+6    |
+  | 3 (OoO)  | Sliding Window, Binary Search, Linked List | 6+7+11 |
+  | 4        | Trees, Bit Manipulation                    | 8+4    |
+  | 5        | Trees, Bit Manipulation                    | 7+3    |
+  | 6 (OoO)  | Backtracking, Graphs                       | 10+13  |
+  | 7        | Tries, Heap                                | 3+7    |
+  | 8        | Advanced Graphs, Intervals                 | 6+6    |
+  | 9        | Greedy                                     | 8      |
+  | 10       | 1-D DP                                     | 6      |
+  | 11       | 1-D DP                                     | 6      |
+  | 12 (OoO) | 2-D DP, Math & Geometry                    | 11+8   |
 
 ## Domain Specific
 - LeetGPU for practice
