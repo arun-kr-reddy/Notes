@@ -2,6 +2,7 @@
 - [Sell ESOPs on Vest](#sell-esops-on-vest)
 - [Don't Track Every Rupee](#dont-track-every-rupee)
 - [Law of Diminishing Marginal Utility](#law-of-diminishing-marginal-utility)
+- [Quotes](#quotes)
 
 ## Links <!-- omit from toc -->
 - [Asset Allocation](https://premium.capitalmind.in/2020/06/how-to-think-about-asset-allocation-in-india-part-2/)
@@ -19,3 +20,7 @@
 ## Law of Diminishing Marginal Utility
 - each additional unit consumed yields less extra utility than the previous unit
 - *example:* ₹0 → ₹10L transforms life but ₹10Cr → ₹10.1Cr barely changes anything
+
+## Quotes
+- > we buy things we don't need with money we don't have to impress people we don't like  
+  > **Tyler Durden (Fight Club)**

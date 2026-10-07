@@ -41,7 +41,7 @@
   ```
 
 ## Quotes
-- > at every job you should either learn or earn. Either is fine. Both is best. But if it's neither, quit  
+- > at every job you should either learn or earn, either is fine, both is best, but quit if it's neither  
   > **Gary Tan (CEO, Y Combinator)**
 - > my career is very important to me, and I need to know if it's as important to Amazon, because if it's not as important to Amazon as it is to me, I have to think about that  
   > **Ethan Evans (VP, Amazon)**
