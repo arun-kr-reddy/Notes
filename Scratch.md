@@ -7,6 +7,29 @@
 
 ## Lectures List
 
+
+## NeetCode 150
+- ㅤ
+  | Week     | Topics Covered                                     | #   |
+  | -------- | -------------------------------------------------- | --- |
+  | 1        | Arrays & Hashing (9) + Two Pointers (5)            | 14  |
+  | 2 (OoO)  | Stack (6) + Binary Search (7) + Sliding Window (6) | 19  |
+  | 3        | Linked List (11)                                   | 11  |
+  | 4        | Trees (15)                                         | 15  |
+  | 5 (OoO)  | Tries (3) + Priority Queue (7) + Backtracking (10) | 20  |
+  | 6        | Graphs (13)                                        | 13  |
+  | 7        | Intervals (6) + Bit Manipulation (7)               | 13  |
+  | 8        | Greedy (8)                                         | 8   |
+  | 9        | 1-D Dynamic Programming (12)                       | 12  |
+  | 10       | Advanced Graphs (6)                                | 6   |
+  | 11 (OoO) | 2-D Dynamic Programming (11)                       | 11  |
+  | 12       | Math & Geometry (8)                                | 8   |
+
+## Domain Specific
+- LeetGPU for practice
+- [GPUMode GPU Puzzles](https://github.com/srush/gpu-puzzles)
+- [Lei Mao Optimization Blogs](https://leimao.github.io/article/CUDA-Matrix-Multiplication-Optimization/)
+
 ### To Do
 - [Tushar Gautam GPU videos](https://www.youtube.com/playlist?list=PLU0zjpa44nPXddA_hWV1U8oO7AevFgXnT)
 - [DSA Graph Theory Visualizations](https://www.youtube.com/playlist?list=PLpXOY-RxVRTPPVLBP6-sz6CMWxhtrI-v_)
@@ -19,29 +42,6 @@
 ### Archive
 - [Deep Learning Systems (GPU implementation of DL algos)](https://www.youtube.com/playlist?list=PLT6QPhVMICSa30axDNX9nljqaTeuftC8t)
 - [Machine Learning](https://www.youtube.com/playlist?list=PLoROMvodv4rNH7qL6-efu_q2_bPuy0adh)
-
-
-## NeetCode 150
-- ㅤ
-  | Week     | Topic                                      | #      |
-  | -------- | ------------------------------------------ | ------ |
-  | 1        | Arrays & Hashing                           | 9      |
-  | 2        | Two Pointers, Stack                        | 5+6    |
-  | 3 (OoO)  | Sliding Window, Binary Search, Linked List | 6+7+11 |
-  | 4        | Trees, Bit Manipulation                    | 8+4    |
-  | 5        | Trees, Bit Manipulation                    | 7+3    |
-  | 6 (OoO)  | Backtracking, Graphs                       | 10+13  |
-  | 7        | Tries, Heap                                | 3+7    |
-  | 8        | Advanced Graphs, Intervals                 | 6+6    |
-  | 9        | Greedy                                     | 8      |
-  | 10       | 1-D DP                                     | 6      |
-  | 11       | 1-D DP                                     | 6      |
-  | 12 (OoO) | 2-D DP, Math & Geometry                    | 11+8   |
-
-## Domain Specific
-- LeetGPU for practice
-- [GPUMode GPU Puzzles](https://github.com/srush/gpu-puzzles)
-- [Lei Mao Optimization Blogs](https://leimao.github.io/article/CUDA-Matrix-Multiplication-Optimization/)
 
 ### Phase 1: Existing Work History Revision (Weeks 1–2)
 
