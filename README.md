@@ -1,12 +1,8 @@
 # Notes
 
 ## Data Structures & Algorithms
-- [Complexity](./DSA/Complexity.md)
-- [Array](./DSA/Array.md)
-- [Hash Table](./DSA/HashTable.md)
-
-## LeetCode
-- [Arrays & Hashing](./LeetCode/Arrays_Hashing.md)
+- [Introduction](./DSA/Introduction.md)
+- [Arrays & Hashing](./DSA/Arrays_Hashing.md)
 
 ## Performance
 - [SIMD](./Performance/SIMD.md)
